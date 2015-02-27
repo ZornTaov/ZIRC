@@ -412,15 +412,15 @@ namespace ZIRC
 						chan = getChannel(argSplit[1]);
 						if (chan != null)
 						{
-							chan.printText("Last Updated by " + argSplit[2] + " at " + (new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc).AddMilliseconds(double.Parse(argSplit[3])).ToLocalTime().ToString()));
+							chan.printText(text);
 						}
-						break;  //#channel 12 :<topic> 
+						break;  //Topic
 					case "333":
 						argSplit = args.Split(' ');
 						chan = getChannel(argSplit[1]);
 						if (chan != null)
 						{
-							chan.printText(text);
+							chan.printText("Last Updated by " + argSplit[2] + " at " + (new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc).AddSeconds(double.Parse(argSplit[3])).ToLocalTime().ToString()));
 						}
 						break;  //Topic Owner and when
 
