@@ -16,8 +16,9 @@ namespace ZIRC
 	{
 		protected MainWindow mainWindow;
 		protected string name;
-		public Stack<string> Undo { get; set; }
-		public Stack<string> Redo { get; set; }
+		private Stack<string> Undo;
+		private Stack<string> Redo;
+		private string prevLine = "";
 		public TreeNode node { get; protected set; }
 		/// Public string for control code characters
 		public string A = "\u0001"; // Action Events
@@ -57,15 +58,25 @@ namespace ZIRC
 			
 			if (e.KeyChar == (char)Keys.Enter )
 			{
-				if (string.IsNullOrEmpty(inputText.Text))
+				if (inputText.Text.Equals(""))
 				{
 					e.Handled = true;
 					return;
 				}
-				Undo.Push(inputText.Text);
+				if (!prevLine.Equals(""))
+				{
+					Undo.Push(prevLine); 
+				}
+				while (Redo.Count > 0)
+				{
+					Undo.Push(Redo.Pop());
+				}
+				Undo.Push(inputText.Text); 
 				parseInput(inputText.Text, this.name);
 				inputText.Clear();
+				prevLine = "";
 				e.Handled = true;
+				// this stuff is left here for reference, will be removed later
 				//userList.Visible = !userList.Visible;
 				//long unixDate = 1423436287000;
 				//DateTime start = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
@@ -119,22 +130,20 @@ namespace ZIRC
 
 			if (sender is TextBox && ((TextBox)sender).Name.Equals("inputText") && e.KeyCode == Keys.Up)
 			{
-				if (Undo.Count == 0) // do a history thing
+				if (!prevLine.Equals(""))
 				{
-					return;
+					Redo.Push(prevLine);
 				}
-				Redo.Push(inputText.Text);
-				inputText.Text = Undo.Pop();
+				this.prevLine = inputText.Text = Undo.Count > 0 ? Undo.Pop() : "";
 				inputText.Select(inputText.Text.Length, 0);
 			}
 			if (sender is TextBox && ((TextBox)sender).Name.Equals("inputText") && e.KeyCode == Keys.Down)
 			{
-				if (Redo.Count == 0) // do a history thing
+				if (!prevLine.Equals(""))
 				{
-					return;
+					Undo.Push(prevLine);
 				}
-				Undo.Push(inputText.Text);
-				inputText.Text = Redo.Pop();
+				this.prevLine = inputText.Text = Redo.Count > 0 ? Redo.Pop() : "";
 				inputText.Select(inputText.Text.Length, 0);
 			}
 		}
