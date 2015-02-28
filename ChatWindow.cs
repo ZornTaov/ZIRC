@@ -93,40 +93,7 @@ namespace ZIRC
 
 		public void main_KeyDown(object sender, KeyEventArgs e)
 		{
-			if (e.Alt && e.KeyCode == Keys.Down)
-			{
-				if (mainWindow.getSelectedNode() != null && mainWindow.getSelectedNode().NextVisibleNode != null)
-				{
-					mainWindow.locationTree.SelectedNode = mainWindow.getSelectedNode().NextVisibleNode;
-					((ChatWindow)mainWindow.locationTree.SelectedNode.Tag).Focus();
-				}
-				return;
-			}
-			if (e.Alt && e.KeyCode == Keys.Up)
-			{
-				if (mainWindow.getSelectedNode() != null && mainWindow.getSelectedNode().PrevVisibleNode != null)
-				{
-					mainWindow.locationTree.SelectedNode = mainWindow.getSelectedNode().PrevVisibleNode;
-					((ChatWindow)mainWindow.locationTree.SelectedNode.Tag).Focus();
-				}
-				return;
-					
-			}
-			if (e.Alt && e.KeyCode == Keys.Left)
-			{
-				if(mainWindow.getSelectedNode().Parent != null)
-				{
-					mainWindow.locationTree.SelectedNode = mainWindow.getSelectedNode().Parent;
-					((ChatWindow)mainWindow.locationTree.SelectedNode.Tag).Focus();
-				}
-				mainWindow.getSelectedNode().Collapse();
-				return;
-			}
-			if (e.Alt && e.KeyCode == Keys.Right)
-			{
-				mainWindow.getSelectedNode().Expand();
-				return;
-			}
+			mainWindow.alt_KeyDown(sender, e);
 
 			if (sender is TextBox && ((TextBox)sender).Name.Equals("inputText") && e.KeyCode == Keys.Up)
 			{

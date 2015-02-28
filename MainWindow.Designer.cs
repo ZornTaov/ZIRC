@@ -82,6 +82,7 @@
 			this.locationTree.Size = new System.Drawing.Size(155, 478);
 			this.locationTree.TabIndex = 3;
 			this.locationTree.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.locationTree_AfterSelect);
+			this.locationTree.KeyDown += new System.Windows.Forms.KeyEventHandler(this.main_KeyDown);
 			// 
 			// main
 			// 

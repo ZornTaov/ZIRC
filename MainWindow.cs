@@ -33,9 +33,9 @@ namespace ZIRC
 
         private void locationTree_AfterSelect(object sender, TreeViewEventArgs e)
         {
-            if (e.Node.Tag != null)
-                ((Form)e.Node.Tag).BringToFront();
-        }
+			if (e.Node.Tag != null)
+				((Form)e.Node.Tag).BringToFront();
+		}
 
         private void timer1_Tick(object sender, EventArgs e)
         {
@@ -118,26 +118,49 @@ namespace ZIRC
 
         public void main_KeyDown(object sender, KeyEventArgs e)
         {
-			Console.WriteLine(e.ToString());
-            if (e.Alt && e.KeyCode == Keys.Down)
-            {
-                if (this.locationTree.SelectedNode != this.locationTree.SelectedNode.FirstNode)
-                this.locationTree.SelectedNode = this.locationTree.SelectedNode.NextNode;
-            }
-            if (e.Alt && e.KeyCode == Keys.Up)
-            {
-                if (this.locationTree.SelectedNode != this.locationTree.SelectedNode.LastNode)
-                    this.locationTree.SelectedNode = this.locationTree.SelectedNode.NextNode;
-            }
-            if (e.Alt && e.KeyCode == Keys.Left)
-            {
-                this.locationTree.SelectedNode.Collapse();
-            }
-            if (e.Alt && e.KeyCode == Keys.Right)
-            {
-                this.locationTree.SelectedNode.Expand();
-            }
+			alt_KeyDown(sender, e);
+			if (e.KeyCode == Keys.Enter)
+			{
+				((ChatWindow)locationTree.SelectedNode.Tag).Focus();
+			}
         }
+		public void alt_KeyDown(object sender, KeyEventArgs e)
+		{
+			if (e.Alt && e.KeyCode == Keys.Down)
+			{
+				if (getSelectedNode() != null && getSelectedNode().NextVisibleNode != null)
+				{
+					locationTree.SelectedNode = getSelectedNode().NextVisibleNode;
+					((ChatWindow)locationTree.SelectedNode.Tag).Focus();
+				}
+				return;
+			}
+			if (e.Alt && e.KeyCode == Keys.Up)
+			{
+				if (getSelectedNode() != null && getSelectedNode().PrevVisibleNode != null)
+				{
+					locationTree.SelectedNode = getSelectedNode().PrevVisibleNode;
+					((ChatWindow)locationTree.SelectedNode.Tag).Focus();
+				}
+				return;
+
+			}
+			if (e.Alt && e.KeyCode == Keys.Left)
+			{
+				if (getSelectedNode().Parent != null)
+				{
+					locationTree.SelectedNode = getSelectedNode().Parent;
+					((ChatWindow)locationTree.SelectedNode.Tag).Focus();
+				}
+				getSelectedNode().Collapse();
+				return;
+			}
+			if (e.Alt && e.KeyCode == Keys.Right)
+			{
+				getSelectedNode().Expand();
+				return;
+			}
+		}
 
 		private void exitToolStripMenuItem_Click(object sender, EventArgs e)
 		{
