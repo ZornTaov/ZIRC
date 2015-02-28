@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using ZIRC.Commands;
+using NLua;
 
 namespace ZIRC
 {
@@ -17,6 +18,7 @@ namespace ZIRC
         IRCConfig config = new IRCConfig();
 		public static Dictionary<string, CommandBase> commands = new Dictionary<string, CommandBase>();
         List<Form> windows = new List<Form>();
+		public Lua state = new Lua();
         public MainWindow()
         {
             InitializeComponent();
@@ -72,7 +74,7 @@ namespace ZIRC
         private void makeDebugWindow()
         {
             TreeNode debugNode = new TreeNode("Debug");
-            debugNode.Tag = new ChatWindow(this, "Debug");
+            debugNode.Tag = new LuaWindow(this, "Debug");
             debugNode.Name = "Debug";
             ((ChatWindow)debugNode.Tag).MdiParent = this;
             ((ChatWindow)debugNode.Tag).WindowState = FormWindowState.Maximized;

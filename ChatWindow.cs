@@ -37,6 +37,7 @@ namespace ZIRC
 			this.userList.ShowRootLines = false;
 			Undo = new Stack<string>();
 			Redo = new Stack<string>();
+			mainWindow.state.RegisterFunction("printText", this, this.GetType().GetMethod("printText"));
 		}
 
 		private void userList_SelectedIndexChanged(object sender, EventArgs e)
