@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace ZIRC.Commands
 {
-	public class CommandQuery : CommandBase
+	public class CommandRaw : CommandBase
 	{
 		public override string Name()
 		{
-			return "query";
+			return "raw";
 		}
 		public override bool Do(ServerWindow window, string channel, string[] args)
 		{
@@ -18,7 +13,7 @@ namespace ZIRC.Commands
 			{
 				return false;
 			}
-			window.queryUser((string)args[0]);
+			window.SendRaw(string.Join(" ",args));
 			return true;
 		}
 		public override string Syntax()
@@ -31,11 +26,11 @@ namespace ZIRC.Commands
 		}
 		public override int MinLength()
 		{
-			return 1;
+			return 2;
 		}
 		public override int MaxLength()
 		{
-			return 1;
+			return int.MaxValue;
 		}
 	}
 }

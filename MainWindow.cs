@@ -16,7 +16,7 @@ namespace ZIRC
     public partial class MainWindow : Form
     {
         IRCConfig config = new IRCConfig();
-		public static Dictionary<string, CommandBase> commands = new Dictionary<string, CommandBase>();
+		public static SortedDictionary<string, CommandBase> commands = new SortedDictionary<string, CommandBase>();
         List<Form> windows = new List<Form>();
 		public Lua state = new Lua();
         public MainWindow()
@@ -27,10 +27,16 @@ namespace ZIRC
 
 		private void InitializeCommands()
 		{
+			commands.Add("help", new CommandHelp());
 			commands.Add("msg", new CommandMsg());
 			commands.Add("me", new CommandMe());
 			commands.Add("query", new CommandQuery());
-			
+			commands.Add("raw", new CommandRaw());
+			commands.Add("quit", new CommandQuit());
+			commands.Add("connect", new CommandConnect());
+			commands.Add("nick", new CommandNick());
+			commands.Add("join", new CommandJoin());
+			commands.Add("part", new CommandPart());
 		}
 
         private void locationTree_AfterSelect(object sender, TreeViewEventArgs e)

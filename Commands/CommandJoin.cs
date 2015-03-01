@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace ZIRC.Commands
 {
-	public class CommandQuery : CommandBase
+	class CommandJoin : CommandBase
 	{
 		public override string Name()
 		{
-			return "query";
+			return "join";
 		}
 		public override bool Do(ServerWindow window, string channel, string[] args)
 		{
@@ -18,16 +18,17 @@ namespace ZIRC.Commands
 			{
 				return false;
 			}
-			window.queryUser((string)args[0]);
+
+			window.joinChannel(args);
 			return true;
 		}
 		public override string Syntax()
 		{
-			return "query <nick>";
+			return "join <channel> [password]";
 		}
 		public override string Help()
 		{
-			return "Opens a Private Message window with the selected user.";
+			return "Joins channel on selected server.";
 		}
 		public override int MinLength()
 		{
@@ -35,7 +36,7 @@ namespace ZIRC.Commands
 		}
 		public override int MaxLength()
 		{
-			return 1;
+			return 2;
 		}
 	}
 }

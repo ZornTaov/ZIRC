@@ -13,16 +13,16 @@ namespace ZIRC.Commands
 			return "me";
 		}
 		/**
-		 *	args = 1:channel, 2: 
+		 *	args = 0:channel, 1: 
 		 */
-		public override bool Do(ServerWindow window, params object[] args)
+		public override bool Do(ServerWindow window, string channel, string[] args)
 		{
-			if (!base.Do(window, args))
+			if (!base.Do(window, channel, args))
 			{
 				return false;
 			}
-			window.SendRaw("PRIVMSG " + (string)args[0] + " :" + window.A + "ACTION " + (string)args[1] + (args.Length < 2 ? "" : " " + (string)args[2]) + window.A);
-			window.getChannel((string)args[0]).printText("* " + window.nickName + " " + (string)args[1] + (args.Length < 2 ? "" : " " + (string)args[2]));
+			window.SendRaw("PRIVMSG " + channel + " :" + window.A + "ACTION " + string.Join(" ", args) + window.A);
+			window.getChannel(channel).printText("* " + window.nickName + " " + string.Join(" ", args));
 			return true;
 		}
 		public override string Syntax()

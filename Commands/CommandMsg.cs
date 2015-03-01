@@ -12,25 +12,20 @@ namespace ZIRC.Commands
 		{
 			return "msg";
 		}
-		public override bool Do(ServerWindow window, params object[] args)
+		public override bool Do(ServerWindow window, string channel, string[] args)
 		{
-			if (!base.Do(window, args))
+			if (!base.Do(window, channel,args))
 			{
 				return false;
 			}
-			if (((string)args[2]).Equals(""))
+			window.SendRaw("PRIVMSG " + (string)args[0] + " :" + string.Join(" ", args, 1, args.Length - 1));
+			if (window.getChannel((string)args[0]) != null)
 			{
-				ErrorLength(window.getChannel((string)args[0]), true);
-				return false;
-			}
-			window.SendRaw("PRIVMSG " + (string)args[1] + " :" + (string)args[2]);
-			if (window.getChannel((string)args[1]) != null)
-			{
-				window.getChannel((string)args[1]).printText(window.nickName + ": " + (string)args[2]);
+				window.getChannel((string)args[0]).printText(window.nickName + ": " + string.Join(" ", args, 1, args.Length - 1));
 			}
 			else
 			{
-				window.getChannel((string)args[0]).printText("-> *" + (string)args[1] + "* " + (string)args[2]);
+				window.printText("-> *" + (string)args[0] + "* " + string.Join(" ", args, 1, args.Length - 1));
 			}
 			return true;
 		}
@@ -44,7 +39,7 @@ namespace ZIRC.Commands
 		}
 		public override int MinLength()
 		{
-			return 3;
+			return 2;
 		}
 		public override int MaxLength()
 		{

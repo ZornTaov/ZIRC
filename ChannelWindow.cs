@@ -17,7 +17,7 @@ namespace ZIRC
         }
 
         public SortedList<string, User> userDict = new SortedList<string, User>();
-
+		public string partReason = "";
         public Type type;
         public ChannelWindow(MainWindow mainWindow, string name, Type type)
             : base(mainWindow, name, (type == Type.Channel))
@@ -72,7 +72,7 @@ namespace ZIRC
         {
 			if (this.type == Type.Channel)
 			{
-				((ServerWindow)this.node.Parent.Tag).SendRaw("PART " + name);
+				((ServerWindow)this.node.Parent.Tag).SendRaw("PART " + name + " " + partReason);
 			} 
             base.OnClosed(e);
         }

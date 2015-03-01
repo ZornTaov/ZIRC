@@ -21,7 +21,7 @@ namespace ZIRC
             Connecting,
             Connected
         }
-        public Status status { get; protected set; }
+        public Status status { get; set; }
         protected TcpClient connection;
         NetworkStream sockstream;
         protected StreamWriter output;
@@ -139,59 +139,59 @@ namespace ZIRC
                 //base.printText(text);
 				if (MainWindow.commands.ContainsKey(match.Groups["command"].Value.ToLower()))
 				{
-					MainWindow.commands[match.Groups["command"].Value.ToLower()].Do(this, channel, match.Groups["args"].Value, match.Groups["text"].Value);
+					MainWindow.commands[match.Groups["command"].Value.ToLower()].Do(this, channel, match.Groups["args"].Value.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries));
 				}
 
-                switch (match.Groups["command"].Value.ToLower())
-                {
-					/* case "me":
+				/* switch (match.Groups["command"].Value.ToLower())
+				{
+					case "me":
 						SendRaw("PRIVMSG " + channel + " :" + A + "ACTION " + match.Groups["args"].Value + (match.Groups["text"] != null ? " " + match.Groups["text"].Value : "") + A);
 						getChannel(channel).printText("* " + nickName + " " + text.Remove(0, 4));
 						break;
 					case "msg":
 						SendRaw("PRIVMSG " + match.Groups["args"].Value + " :" + match.Groups["text"].Value);
-						break;  */
+						break;
 					case "raw":
 						SendRaw(text.Remove(0,5));
 						break;
-                    case "quit":
-                        this.status = Status.Disconnecting;
-                        SendRaw("QUIT " + match.Groups["args"].Value + (match.Groups["text"] != null ? " " + match.Groups["text"].Value : ""));
-                        break;
-                    case "connect":
-                        if (this.status == Status.Disconnected)
-                        {
-                            connect();
-                        }
-                        break;
-                    case "nick":
-                        this.ChangeNickname(match.Groups["args"].Value);
-                        break;
-                    case "join":
-						this.joinChannel(match.Groups["args"].Value, match.Groups["text"].Value);
-                        break;
+					case "quit":
+						this.status = Status.Disconnecting;
+						SendRaw("QUIT " + match.Groups["args"].Value);
+						break;
+					case "connect":
+						if (this.status == Status.Disconnected)
+						{
+							connect();
+						}
+						break;
+					case "nick":
+						this.ChangeNickname(match.Groups["args"].Value);
+						break;
+					case "join":
+						this.joinChannel(match.Groups["args"].Value, match.Groups["args"].Value.Remove(0, 5));
+						break;
 					case "kick":
 						SendRaw("KICK " + match.Groups["args"] + " " + match.Groups["text"].Value);
 						break;
-                }
+				}  */
             }
             else
             {
 				if (!channel.Equals(""))
 				{
-					SendRaw("PRIVMSG " + channel + " :" + match.Groups["text"].Value, false);
-					messageChannel(this.nickName, channel, match.Groups["text"].Value);
+					SendRaw("PRIVMSG " + channel + " :" + text, false);
+					messageChannel(this.nickName, channel, text);
 				}
 				else
 				{
-					this.printText(match.Groups["text"].Value);
+					this.printText(text);
 				}
             }
         }
 
-        private void joinChannel(string[] splitData)
+		public void joinChannel(string[] splitData)
         {
-            this.joinChannel(splitData[1], (splitData.Length > 2 ? " " + splitData[2] : ""));
+            this.joinChannel(splitData[0], (splitData.Length > 1 ? " " + splitData[1] : ""));
         }
         public void joinChannel(string chan, string pass = "")
         {
@@ -217,6 +217,17 @@ namespace ZIRC
 			}
 			SendRaw("JOIN " + chan + " " + pass);
         }
+
+		public void PartChannel(string chan, string reason = "")
+		{
+			if (this.getChannel(chan) == null)
+			{
+				return;
+			}
+			this.getChannel(chan).partReason = reason;
+			this.getChannel(chan).Close();
+
+		}
 		public void queryUser(string user)
 		{
 			if (this.status == Status.Disconnected)
@@ -560,5 +571,5 @@ namespace ZIRC
         {
             this.Text = this.nickName + " on " + this.address;
         }
-    }
+	}
 }

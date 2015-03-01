@@ -8,11 +8,11 @@ namespace ZIRC.Commands
 {
 	public abstract class CommandBase
 	{
-		public virtual bool Do(ServerWindow window, params object[] args)
+		public virtual bool Do(ServerWindow window, string channel, string[] args)
 		{
 			if (args.Length < this.MinLength() || args.Length > this.MaxLength())
 			{
-				this.ErrorLength(window, args.Length < this.MinLength());
+				this.ErrorLength(window, channel, args.Length, args.Length < this.MinLength());
 				return false;
 			}
 			return true;
@@ -28,9 +28,9 @@ namespace ZIRC.Commands
 		{
 			return int.MaxValue;
 		}
-		public virtual void ErrorLength(ChatWindow window, bool small)
+		public virtual void ErrorLength(ServerWindow window, string channel, int length, bool small)
 		{
-			window.printText("Error: "+ (small ? "not enough arguments." : "too many arguments" ) );
+			window.getChannel(channel).printText("Error: " + Name() + " Args: " + length + (small ? " Not Enough Arguments." : " Too Many Arguments" ) );
 		}
 	}
 }

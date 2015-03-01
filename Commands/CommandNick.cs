@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace ZIRC.Commands
 {
-	public class CommandQuery : CommandBase
+	class CommandNick : CommandBase
 	{
 		public override string Name()
 		{
-			return "query";
+			return "nick";
 		}
 		public override bool Do(ServerWindow window, string channel, string[] args)
 		{
@@ -18,16 +18,17 @@ namespace ZIRC.Commands
 			{
 				return false;
 			}
-			window.queryUser((string)args[0]);
+
+			window.ChangeNickname(args[0]);
 			return true;
 		}
 		public override string Syntax()
 		{
-			return "query <nick>";
+			return "nick <name>";
 		}
 		public override string Help()
 		{
-			return "Opens a Private Message window with the selected user.";
+			return "Changes your nick on current selected server.";
 		}
 		public override int MinLength()
 		{

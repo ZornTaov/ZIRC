@@ -84,11 +84,18 @@
     <Compile Include="ChatWindow.Designer.cs">
       <DependentUpon>ChatWindow.cs</DependentUpon>
     </Compile>
+    <Compile Include="Commands\CommandConnect.cs" />
+    <Compile Include="Commands\CommandHelp.cs" />
+    <Compile Include="Commands\CommandJoin.cs" />
+    <Compile Include="Commands\CommandNick.cs" />
+    <Compile Include="Commands\CommandPart.cs" />
+    <Compile Include="Commands\CommandQuit.cs" />
     <Compile Include="Commands\CommandBase.cs" />
     <Compile Include="Commands\CommandExample.cs" />
     <Compile Include="Commands\CommandMe.cs" />
     <Compile Include="Commands\CommandMsg.cs" />
     <Compile Include="Commands\CommandQuery.cs" />
+    <Compile Include="Commands\CommandRaw.cs" />
     <Compile Include="ConnectWindow.cs">
       <SubType>Form</SubType>
     </Compile>

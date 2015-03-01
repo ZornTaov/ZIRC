@@ -51,6 +51,6 @@ namespace ZIRC
         public static Regex serverflags = new Regex(@"\b(?:(?<name>\w+)(?:=(?<arg>\S+))?\s?)\b");
         public static Regex modeevent = new Regex(@"(?<chan>\S+)\s(?<text>.*)");
         public static Regex usermode = new Regex(@"(?<mode>[+%@&~]*)");
-		public static Regex command = new Regex(@"^(?:(?:\/(?<command>\S+))(?:\s(?<args>\S+))?\s?)?(?:(?<text>.+))?$");
+		public static Regex command = new Regex(@"^(?:\/(?<command>[\S]+)\s?)(?:(?<args>.+))?$");
     }
 }

@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace ZIRC.Commands
 {
-	public class CommandQuery : CommandBase
+	public class CommandQuit : CommandBase
 	{
 		public override string Name()
 		{
-			return "query";
+			return "quit";
 		}
 		public override bool Do(ServerWindow window, string channel, string[] args)
 		{
@@ -18,24 +18,26 @@ namespace ZIRC.Commands
 			{
 				return false;
 			}
-			window.queryUser((string)args[0]);
+
+			window.status = ServerWindow.Status.Disconnecting;
+			window.SendRaw("QUIT " + string.Join(" ", args));
 			return true;
 		}
 		public override string Syntax()
 		{
-			return "query <nick>";
+			return "quit [reason]";
 		}
 		public override string Help()
 		{
-			return "Opens a Private Message window with the selected user.";
+			return "Quits the current selected server.";
 		}
 		public override int MinLength()
 		{
-			return 1;
+			return 0;
 		}
 		public override int MaxLength()
 		{
-			return 1;
+			return int.MaxValue;
 		}
 	}
 }

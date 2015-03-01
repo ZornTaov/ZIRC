@@ -49,6 +49,7 @@
 			this.chatBox.AcceptsReturn = true;
 			this.chatBox.BackColor = System.Drawing.SystemColors.Window;
 			this.chatBox.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.chatBox.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.chatBox.Location = new System.Drawing.Point(0, 0);
 			this.chatBox.Multiline = true;
 			this.chatBox.Name = "chatBox";
@@ -104,45 +105,45 @@
             this.whoisToolStripMenuItem,
             this.queryToolStripMenuItem});
 			this.userListContextMenu.Name = "userListContextMenu";
-			this.userListContextMenu.Size = new System.Drawing.Size(153, 142);
+			this.userListContextMenu.Size = new System.Drawing.Size(144, 120);
 			// 
 			// toggleOpToolStripMenuItem
 			// 
 			this.toggleOpToolStripMenuItem.Name = "toggleOpToolStripMenuItem";
-			this.toggleOpToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.toggleOpToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
 			this.toggleOpToolStripMenuItem.Text = "Toggle Op";
 			this.toggleOpToolStripMenuItem.Click += new System.EventHandler(this.toggleOpToolStripMenuItem_Click);
 			// 
 			// toggleVoiceToolStripMenuItem
 			// 
 			this.toggleVoiceToolStripMenuItem.Name = "toggleVoiceToolStripMenuItem";
-			this.toggleVoiceToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.toggleVoiceToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
 			this.toggleVoiceToolStripMenuItem.Text = "Toggle Voice";
 			this.toggleVoiceToolStripMenuItem.Click += new System.EventHandler(this.toggleVoiceToolStripMenuItem_Click);
 			// 
 			// kickUserToolStripMenuItem
 			// 
 			this.kickUserToolStripMenuItem.Name = "kickUserToolStripMenuItem";
-			this.kickUserToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.kickUserToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
 			this.kickUserToolStripMenuItem.Text = "Kick User";
 			this.kickUserToolStripMenuItem.Click += new System.EventHandler(this.kickUserToolStripMenuItem_Click);
 			// 
 			// toolStripSeparator1
 			// 
 			this.toolStripSeparator1.Name = "toolStripSeparator1";
-			this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
+			this.toolStripSeparator1.Size = new System.Drawing.Size(140, 6);
 			// 
 			// whoisToolStripMenuItem
 			// 
 			this.whoisToolStripMenuItem.Name = "whoisToolStripMenuItem";
-			this.whoisToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.whoisToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
 			this.whoisToolStripMenuItem.Text = "Whois";
 			this.whoisToolStripMenuItem.Click += new System.EventHandler(this.whoisToolStripMenuItem_Click);
 			// 
 			// queryToolStripMenuItem
 			// 
 			this.queryToolStripMenuItem.Name = "queryToolStripMenuItem";
-			this.queryToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.queryToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
 			this.queryToolStripMenuItem.Text = "Query";
 			this.queryToolStripMenuItem.Click += new System.EventHandler(this.queryToolStripMenuItem_Click);
 			// 
