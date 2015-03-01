@@ -94,7 +94,8 @@ namespace ZIRC
 
 		public void main_KeyDown(object sender, KeyEventArgs e)
 		{
-			mainWindow.alt_KeyDown(sender, e);
+
+			if (mainWindow.alt_KeyDown(sender, e)) return;
 
 			if (sender is TextBox && ((TextBox)sender).Name.Equals("inputText") && e.KeyCode == Keys.Up)
 			{

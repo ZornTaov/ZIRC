@@ -125,14 +125,14 @@ namespace ZIRC
 		}
 
         public void main_KeyDown(object sender, KeyEventArgs e)
-        {
-			alt_KeyDown(sender, e);
+		{
+			if (alt_KeyDown(sender, e)) return;
 			if (e.KeyCode == Keys.Enter)
 			{
 				((ChatWindow)locationTree.SelectedNode.Tag).Focus();
 			}
         }
-		public void alt_KeyDown(object sender, KeyEventArgs e)
+		public bool alt_KeyDown(object sender, KeyEventArgs e)
 		{
 			if (e.Alt && e.KeyCode == Keys.Down)
 			{
@@ -141,7 +141,7 @@ namespace ZIRC
 					locationTree.SelectedNode = getSelectedNode().NextVisibleNode;
 					((ChatWindow)locationTree.SelectedNode.Tag).Focus();
 				}
-				return;
+				return true;
 			}
 			if (e.Alt && e.KeyCode == Keys.Up)
 			{
@@ -150,7 +150,7 @@ namespace ZIRC
 					locationTree.SelectedNode = getSelectedNode().PrevVisibleNode;
 					((ChatWindow)locationTree.SelectedNode.Tag).Focus();
 				}
-				return;
+				return true;
 
 			}
 			if (e.Alt && e.KeyCode == Keys.Left)
@@ -161,15 +161,54 @@ namespace ZIRC
 					((ChatWindow)locationTree.SelectedNode.Tag).Focus();
 				}
 				getSelectedNode().Collapse();
-				return;
+				return true;
 			}
 			if (e.Alt && e.KeyCode == Keys.Right)
 			{
 				getSelectedNode().Expand();
-				return;
+				return true;
+			}
+			return false;
+		}
+
+		private void Menu_Copy(Object sender, EventArgs e)
+		{
+			// Ensure that text is selected in the text box.    
+			if (((TextBox)((ChatWindow)getSelectedNode().Tag).ActiveControl).SelectionLength > 0)
+				// Copy the selected text to the Clipboard.
+				((TextBox)((ChatWindow)getSelectedNode().Tag).ActiveControl).Copy();
+		}
+
+		private void Menu_Cut(Object sender, EventArgs e)
+		{
+			// Ensure that text is currently selected in the text box.    
+			if (((TextBox)((ChatWindow)getSelectedNode().Tag).ActiveControl).SelectedText.Length > 0)
+				// Cut the selected text in the control and paste it into the Clipboard.
+				((TextBox)((ChatWindow)getSelectedNode().Tag).ActiveControl).Cut();
+		}
+
+		private void Menu_Paste(Object sender, EventArgs e)
+		{
+			// Determine if there is any text in the Clipboard to paste into the text box. 
+			if (Clipboard.GetDataObject().GetDataPresent(DataFormats.Text))
+			{
+				// Paste current text in Clipboard into text box.
+				((ChatWindow)getSelectedNode().Tag).inputText.Paste();
 			}
 		}
 
+
+		private void Menu_Undo(Object sender, EventArgs e)
+		{
+			// Determine if last operation can be undone in text box.    
+			if (((TextBox)((ChatWindow)getSelectedNode().Tag).ActiveControl).CanUndo == true)
+			{
+				// Undo the last operation.
+				((TextBox)((ChatWindow)getSelectedNode().Tag).ActiveControl).Undo();
+				// Clear the undo buffer to prevent last action from being redone.
+				//((TextBox)((ChatWindow)getSelectedNode().Tag).ActiveControl).ClearUndo();
+			}
+		}
 		private void exitToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			DialogResult result = MessageBox.Show(this, "Are you sure you want to quit?", "Exiting ZIRC", MessageBoxButtons.OKCancel);

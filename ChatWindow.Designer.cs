@@ -79,6 +79,7 @@
 			this.inputText.Name = "inputText";
 			this.inputText.Size = new System.Drawing.Size(284, 20);
 			this.inputText.TabIndex = 13;
+			this.inputText.WordWrap = false;
 			this.inputText.KeyDown += new System.Windows.Forms.KeyEventHandler(this.main_KeyDown);
 			this.inputText.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.inputText_KeyPress);
 			// 
