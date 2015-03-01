@@ -72,6 +72,8 @@
 			// 
 			this.inputText.AcceptsReturn = true;
 			this.inputText.Dock = System.Windows.Forms.DockStyle.Bottom;
+			this.inputText.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.inputText.ForeColor = System.Drawing.SystemColors.WindowText;
 			this.inputText.Location = new System.Drawing.Point(0, 242);
 			this.inputText.Multiline = true;
 			this.inputText.Name = "inputText";
