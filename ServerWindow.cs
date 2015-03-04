@@ -123,7 +123,7 @@ namespace ZIRC
             if (status != Status.Disconnected)
             {
                 //printText(message);
-                byte[] bs = Encoding.Default.GetBytes(message + "\n");
+                byte[] bs = Encoding.UTF8.GetBytes(message + "\n");
                 connection.GetStream().Write(bs, 0, bs.Length);
                 if (log) this.chatBox.AppendText("<<< " + message + Environment.NewLine);
                 Console.WriteLine(message);
@@ -270,7 +270,7 @@ namespace ZIRC
                     if (readBuffer[i] == 0xA || readBuffer[i] == 0xD)
                     {
                         if (i > 0)
-                            parseLine(Encoding.Default.GetString(readBuffer, 0, i));
+							parseLine(Encoding.UTF8.GetString(readBuffer, 0, i));
 
                         // clear & continue
                         for (int j = 0; j < readPos - i - 1; j++)
