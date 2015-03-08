@@ -52,5 +52,6 @@ namespace ZIRC
         public static Regex modeevent = new Regex(@"(?<chan>\S+)\s(?<text>.*)");
         public static Regex usermode = new Regex(@"(?<mode>[+%@&~]*)");
 		public static Regex command = new Regex(@"^(?:\/(?<command>[\S]+)\s?)(?:(?<args>.+))?$");
+		public static Regex color = new Regex((char)3 + @"(?:\d{1,2}(?:,\d{1,2})?)?");
     }
 }
