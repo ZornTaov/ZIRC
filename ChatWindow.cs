@@ -37,7 +37,7 @@ namespace ZIRC
 			this.userList.ShowRootLines = false;
 			Undo = new Stack<string>();
 			Redo = new Stack<string>();
-			mainWindow.state.RegisterFunction("printText", this, this.GetType().GetMethod("printText"));
+			mainWindow.state.RegisterFunction("print", this, this.GetType().GetMethod("print"));
 		}
 
 		private void userList_SelectedIndexChanged(object sender, EventArgs e)
@@ -92,7 +92,7 @@ namespace ZIRC
 			
 		}
 
-		public void main_KeyDown(object sender, KeyEventArgs e)
+		public virtual void main_KeyDown(object sender, KeyEventArgs e)
 		{
 
 			if (mainWindow.alt_KeyDown(sender, e)) return;
@@ -118,13 +118,18 @@ namespace ZIRC
 		}
 		protected virtual void ChatWindow_Activated(Object sender, EventArgs e)
 		{
-
 			mainWindow.locationTree.SelectedNode = this.node;
+			this.inputText.Focus();
 		}
 
 		public virtual void parseInput(string text, string channel = "")
 		{
 			printText(text);
+		}
+
+		public virtual void print(object text)
+		{
+			chatBox.AppendText("[" + DateTime.Now.ToShortTimeString() + "] " + (text == null ? "nil" : text.ToString()) + Environment.NewLine);
 		}
 
 		public virtual void printText(string text)
@@ -138,27 +143,32 @@ namespace ZIRC
 		}
 		public virtual void timer1_Ticker(object sender, EventArgs e) { }
 
-		private void toggleOpToolStripMenuItem_Click(object sender, EventArgs e)
+		public virtual void toggleOpToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 
 		}
 
-		private void toggleVoiceToolStripMenuItem_Click(object sender, EventArgs e)
+		public virtual void toggleVoiceToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 
 		}
 
-		private void kickUserToolStripMenuItem_Click(object sender, EventArgs e)
+		public virtual void kickUserToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 
 		}
 
-		private void whoisToolStripMenuItem_Click(object sender, EventArgs e)
+		public virtual void whoisToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 
 		}
 
-		private void queryToolStripMenuItem_Click(object sender, EventArgs e)
+		public virtual void queryToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+
+		}
+
+		public virtual void inputText_MouseDown(object sender, MouseEventArgs e)
 		{
 
 		}

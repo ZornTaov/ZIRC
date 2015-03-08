@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
 			this.components = new System.ComponentModel.Container();
-			this.chatBox = new System.Windows.Forms.TextBox();
 			this.splitter2 = new System.Windows.Forms.Splitter();
 			this.inputText = new System.Windows.Forms.TextBox();
 			this.timer1 = new System.Windows.Forms.Timer(this.components);
@@ -41,28 +40,14 @@
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.whoisToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.queryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.chatBox = new System.Windows.Forms.RichTextBox();
 			this.userListContextMenu.SuspendLayout();
 			this.SuspendLayout();
-			// 
-			// chatBox
-			// 
-			this.chatBox.AcceptsReturn = true;
-			this.chatBox.BackColor = System.Drawing.SystemColors.Window;
-			this.chatBox.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.chatBox.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.chatBox.Location = new System.Drawing.Point(0, 0);
-			this.chatBox.Multiline = true;
-			this.chatBox.Name = "chatBox";
-			this.chatBox.ReadOnly = true;
-			this.chatBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-			this.chatBox.Size = new System.Drawing.Size(207, 242);
-			this.chatBox.TabIndex = 14;
-			this.chatBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.main_KeyDown);
 			// 
 			// splitter2
 			// 
 			this.splitter2.Dock = System.Windows.Forms.DockStyle.Right;
-			this.splitter2.Location = new System.Drawing.Point(207, 0);
+			this.splitter2.Location = new System.Drawing.Point(182, 0);
 			this.splitter2.Name = "splitter2";
 			this.splitter2.Size = new System.Drawing.Size(3, 242);
 			this.splitter2.TabIndex = 15;
@@ -71,6 +56,7 @@
 			// inputText
 			// 
 			this.inputText.AcceptsReturn = true;
+			this.inputText.AcceptsTab = true;
 			this.inputText.Dock = System.Windows.Forms.DockStyle.Bottom;
 			this.inputText.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.inputText.ForeColor = System.Drawing.SystemColors.WindowText;
@@ -82,6 +68,7 @@
 			this.inputText.WordWrap = false;
 			this.inputText.KeyDown += new System.Windows.Forms.KeyEventHandler(this.main_KeyDown);
 			this.inputText.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.inputText_KeyPress);
+			this.inputText.MouseDown += new System.Windows.Forms.MouseEventHandler(this.inputText_MouseDown);
 			// 
 			// timer1
 			// 
@@ -93,9 +80,9 @@
 			// 
 			this.userList.ContextMenuStrip = this.userListContextMenu;
 			this.userList.Dock = System.Windows.Forms.DockStyle.Right;
-			this.userList.Location = new System.Drawing.Point(210, 0);
+			this.userList.Location = new System.Drawing.Point(185, 0);
 			this.userList.Name = "userList";
-			this.userList.Size = new System.Drawing.Size(74, 242);
+			this.userList.Size = new System.Drawing.Size(99, 242);
 			this.userList.TabIndex = 16;
 			// 
 			// userListContextMenu
@@ -150,13 +137,25 @@
 			this.queryToolStripMenuItem.Text = "Query";
 			this.queryToolStripMenuItem.Click += new System.EventHandler(this.queryToolStripMenuItem_Click);
 			// 
+			// chatBox
+			// 
+			this.chatBox.BackColor = System.Drawing.SystemColors.Window;
+			this.chatBox.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.chatBox.Location = new System.Drawing.Point(0, 0);
+			this.chatBox.Name = "chatBox";
+			this.chatBox.ReadOnly = true;
+			this.chatBox.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
+			this.chatBox.Size = new System.Drawing.Size(185, 242);
+			this.chatBox.TabIndex = 17;
+			this.chatBox.Text = "";
+			// 
 			// ChatWindow
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(284, 262);
-			this.Controls.Add(this.chatBox);
 			this.Controls.Add(this.splitter2);
+			this.Controls.Add(this.chatBox);
 			this.Controls.Add(this.userList);
 			this.Controls.Add(this.inputText);
 			this.Name = "ChatWindow";
@@ -170,7 +169,6 @@
 
         #endregion
 
-        public System.Windows.Forms.TextBox chatBox;
 		private System.Windows.Forms.Splitter splitter2;
         public System.Windows.Forms.TextBox inputText;
 		protected System.Windows.Forms.Timer timer1;
@@ -182,5 +180,6 @@
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
 		private System.Windows.Forms.ToolStripMenuItem whoisToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem queryToolStripMenuItem;
+		public System.Windows.Forms.RichTextBox chatBox;
     }
 }
