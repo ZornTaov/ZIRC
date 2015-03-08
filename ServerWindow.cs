@@ -124,7 +124,14 @@ namespace ZIRC
             {
                 //printText(message);
                 byte[] bs = Encoding.UTF8.GetBytes(message + "\n");
-                connection.GetStream().Write(bs, 0, bs.Length);
+				try
+				{
+					connection.GetStream().Write(bs, 0, bs.Length);
+				}
+				catch (IOException)
+				{
+					this.status = Status.Disconnecting;
+				}
                 if (log) this.chatBox.AppendText("<<< " + message + Environment.NewLine);
                 Console.WriteLine(message);
             }
@@ -324,6 +331,7 @@ namespace ZIRC
 			Console.WriteLine(line);
             string[] splitData = line.Split(' '); // SPLIT UP PACKET BY SPACES
             if (splitData[0] == "PING") { SendRaw("PONG " + splitData[1]); return; } //IRC KEEP ALIVE - DO NOT MODIFY
+			if (splitData[0] == "ERROR") { this.status = Status.Disconnecting; return; } //IRC ERROR - Go ahead and disconnect
 
             // REGEX SPLIT DATA
             Match match = IRCRegex.coreregx.Match(line);
