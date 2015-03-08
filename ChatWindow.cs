@@ -178,5 +178,11 @@ namespace ZIRC
 		{
 
 		}
+
+		private void chatBox_TextChanged(object sender, EventArgs e)
+		{
+			chatBox.SelectionStart = chatBox.Text.Length;
+			chatBox.ScrollToCaret();
+		}
 	}
 }
