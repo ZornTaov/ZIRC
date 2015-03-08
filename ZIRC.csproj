@@ -12,6 +12,7 @@
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <IsWebBootstrapper>false</IsWebBootstrapper>
+    <TargetFrameworkProfile />
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -26,7 +27,6 @@
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -106,11 +106,17 @@
     <Compile Include="LuaWindow.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Properties\QuickConnect.cs" />
     <Compile Include="Regex.cs" />
     <Compile Include="ServerWindow.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Settings.cs" />
+    <Compile Include="Properties\QuickConnect.Designer.cs">
+      <DependentUpon>QuickConnect.settings</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
     <Compile Include="User.cs" />
     <Compile Include="MainWindow.cs">
       <SubType>Form</SubType>
@@ -154,6 +160,10 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="Properties\QuickConnect.settings">
+      <Generator>PublicSettingsSingleFileGenerator</Generator>
+      <LastGenOutput>QuickConnect.Designer.cs</LastGenOutput>
+    </None>
     <None Include="ZIRC.config">
       <SubType>Designer</SubType>
     </None>

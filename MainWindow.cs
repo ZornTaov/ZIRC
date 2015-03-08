@@ -217,5 +217,22 @@ namespace ZIRC
 				this.Close();
 			}
 		}
+
+		private void fonttemporaryToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			DialogResult result = fontDialog1.ShowDialog();
+			if (result == DialogResult.OK)
+			{
+				// Get Font.
+				Font font = fontDialog1.Font;
+				// Set TextBox properties.
+				foreach (TreeNode node in locationTree.Nodes)
+				{
+					((ChatWindow)node.Tag).inputText.Font = ((ChatWindow)node.Tag).chatBox.Font = font;
+				}
+				Properties.Settings.Default.mainFont = font;
+				Properties.Settings.Default.Save();
+			}
+		}
     }
 }

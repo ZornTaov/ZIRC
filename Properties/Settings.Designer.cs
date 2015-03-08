@@ -25,97 +25,13 @@ namespace ZIRC.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("127.0.0.1")]
-        public string address {
+        [global::System.Configuration.DefaultSettingValueAttribute("Courier New, 9pt")]
+        public global::System.Drawing.Font mainFont {
             get {
-                return ((string)(this["address"]));
+                return ((global::System.Drawing.Font)(this["mainFont"]));
             }
             set {
-                this["address"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("6667")]
-        public int port {
-            get {
-                return ((int)(this["port"]));
-            }
-            set {
-                this["port"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string password {
-            get {
-                return ((string)(this["password"]));
-            }
-            set {
-                this["password"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("ZIRC_Nick")]
-        public string nickName {
-            get {
-                return ((string)(this["nickName"]));
-            }
-            set {
-                this["nickName"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("ZIRC")]
-        public string userName {
-            get {
-                return ((string)(this["userName"]));
-            }
-            set {
-                this["userName"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("ZIRC")]
-        public string realName {
-            get {
-                return ((string)(this["realName"]));
-            }
-            set {
-                this["realName"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("ZIRC_Nick1")]
-        public string altNick1 {
-            get {
-                return ((string)(this["altNick1"]));
-            }
-            set {
-                this["altNick1"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("ZIRC_Nick2")]
-        public string altNick2 {
-            get {
-                return ((string)(this["altNick2"]));
-            }
-            set {
-                this["altNick2"] = value;
+                this["mainFont"] = value;
             }
         }
     }

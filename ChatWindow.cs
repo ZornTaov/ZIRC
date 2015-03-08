@@ -28,6 +28,7 @@ namespace ZIRC
 		public ChatWindow(MainWindow mainWindow, string name, bool hasList = false)
 		{
 			InitializeComponent();
+			this.chatBox.Font = this.inputText.Font = Properties.Settings.Default.mainFont;
 			this.mainWindow = mainWindow;
 			this.Text = this.name = name;
 			this.userList.Visible = hasList;
