@@ -20,7 +20,15 @@ namespace ZIRC
 			try
 			{
 				object[] result = mainWindow.state.DoString(text);
-				if (result != null) printText("*** " + result.ToString());
+				if (result != null)
+				{
+					string line = "[" + DateTime.Now.ToShortTimeString() + "] *** ";
+					foreach (object item in result)
+					{
+						line += (item == null ? "nil" : item.ToString()) + "\t";
+					}
+					printText(line);
+				}
 			}
 			catch (Exception e)
 			{

@@ -127,9 +127,15 @@ namespace ZIRC
 			printText(text);
 		}
 
-		public virtual void print(object text)
+		public virtual void print(params object[] text)
 		{
-			chatBox.AppendText("[" + DateTime.Now.ToShortTimeString() + "] " + (text == null ? "nil" : text.ToString()) + Environment.NewLine);
+			if(text == null) text = new object[]{ "nil" };
+			string line = "[" + DateTime.Now.ToShortTimeString() + "] ";
+			foreach (object item in text)
+			{
+				line += (item == null ? "nil" : item.ToString()) + "\t";
+			}
+			chatBox.AppendText(line + Environment.NewLine);
 		}
 
 		public virtual void printText(string text)
