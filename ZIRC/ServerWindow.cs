@@ -345,7 +345,7 @@ namespace ZIRC
                 string text = match.Groups["text"] != null ? match.Groups["text"].Value : ""; //VARIABLE TEXT TRAILING EVENT
                 string nick = "", ident = "", host = "", address = "";
                 ChannelWindow chan;
-				string[] argSplit;
+				string[] argSplit = args.Split(' ');
                 Match split = IRCRegex.hostsplit.Match(hostmask);
                 if (split.Success)
                 {
@@ -358,30 +358,41 @@ namespace ZIRC
 
                 switch (command.ToLower())
                 {
-                    case "001":
-                        //server welcome
+                    case "001": //server welcome
                         setTitle(splitData);
                         break;
+					case "005": // Server supported Protocols
+						break;
+					case "004": // server, version, chanops userops
+						break;
 
-                    case "372":
-                        //motd
+					case "002": // host and version
+					case "003": // server creation date
+					case "251": // number of users
+					case "255": // /lusers Response
+					case "265": // number of local clients and servers 
+					case "266": // current local users and max
+					case "375": // current global users and max
+						printText( text );
                         break;
 
-                    case "376":
-                    case "422":
-                        //end of motd
+					case "252": // number of operators
+					case "254": // number of channels
+						printText( text + ": " + argSplit[1] );
+						break;
+
+                    case "372": // motd
+						printText( text );
+                        break;
+
+                    case "376": // no motd
+                    case "422": // end of motd
                         status = Status.Connected;
                         joinChannel("#z");
 
                         break;
 
-                    case "nick":
-                        //change nicks in all channels
-
-                        break;
-
-                    case "join":
-                        //add nick to channel
+                    case "join": // add nick to channel
 
                         messageChannel(nick, text, nick + " has joined the channel");
 						chan = getChannel(text);
@@ -393,23 +404,24 @@ namespace ZIRC
                         {
                             chan.AddToUserList(nick);
                         }
-                        break;
+						break;
 
+					case "part": // remove nick from channel
+						messageChannel( nick, args, nick + " has left the channel" );
+						chan = getChannel( args );
+						if ( chan != null )
+						{
+							chan.RemoveFromUserList( nick );
+						}
+						break;
 
-                    case "part":
-                        //remove nick from channel
-                        messageChannel(nick, args, nick + " has left the channel");
-						chan = getChannel(args);
-                        if (chan != null)
-                        {
-                            chan.RemoveFromUserList(nick);
-                        }
-                        break;
+					case "nick": // change nicks in all channels
 
-                    case "quit":
-                        //remove nick from all channels
+						break;
 
-                        break;
+					case "quit": // remove nick from all channels
+
+						break;
 
                     case "privmsg":
 						if (args.StartsWith("#"))
@@ -422,29 +434,26 @@ namespace ZIRC
 						}
                         break;
 
-                    case "notice":
-                        //send message to channel window
+                    case "notice": // send message to channel window
+						printText( text );
 						break;
 
-					case "332":
-						argSplit = args.Split(' ');
+					case "332": // Topic
 						chan = getChannel(argSplit[1]);
 						if (chan != null)
 						{
 							chan.printText(text);
 						}
-						break;  //Topic
-					case "333":
-						argSplit = args.Split(' ');
+						break;
+					case "333": // Topic Owner and when
 						chan = getChannel(argSplit[1]);
 						if (chan != null)
 						{
 							chan.printText("Last Updated by " + argSplit[2] + " at " + (new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc).AddSeconds(double.Parse(argSplit[3])).ToLocalTime().ToString()));
 						}
-						break;  //Topic Owner and when
+						break;  
 
-                    case "353": //names
-                        argSplit = args.Split(' ');
+                    case "353": // names
                         chan = getChannel(argSplit[2]);
                         if (chan != null)
                         {
@@ -452,9 +461,7 @@ namespace ZIRC
 							chan.printText(text);
                         }
                         break;
-                    case "366": //names end
-						//fill channel nick list
-						argSplit = args.Split(' ');
+                    case "366": // names end
                         chan = getChannel(argSplit[1]);
                         if (chan != null)
                         {
@@ -479,56 +486,30 @@ namespace ZIRC
                         }
                         ChangeNickname(nickName);
                         break;
-					case "005":
-						break;  // Server supported Protocols
-					case "405":  
-						break;  //Too many Channels
-					case "476":
-						break;  //Bac Channel Mask
-					case "475":
-						break;  //Bad channel key
-					case "474":  
-						break;  //Banned from Channel
-					case "374":  
-						break;  //Channel mode is
-					case "404":  
-						break;  //Can't send to channel
-					case "471":  
-						break;  //Channel is full
-					case "482": 
-						break;  //Not channel op
-					case "473": 
-						break;  //Invite only
-					case "484": 
-						break;  //Is Chan Service
-					case "254": 
-						break;  // /lusers Response
-					case "403": 
-						break;  //No Such Channel
-					case "442": 
-						break;  //Not on Channel
-					case "489": 
-						break;  //Secure only chan
-					case "441": 
-						break;  //User not in chan
-					case "319": 
-						break;  //Whois User common channels
-					case "335": 
-						break;  //Whois bot
-					case "308": 
-						break;  //whois admin
-					case "311": 
-						break;  //Whois User info
-					case "431": 
-						break;  //No nickname given (/whois /whowas /nick)
-					case "401": 
-						break;  //No such nick
-					case "412": 
-						break;  //No text to send
-					case "451": 
-						break;  //Not registered
-					case "402": 
-						break;  //Not such server
+					
+					case "308": //whois admin
+					case "311": //Whois User info
+					case "319": //Whois User common channels
+					case "335": //Whois bot
+					case "374": //Channel mode is
+					case "401": //No such nick
+					case "402": //Not such server
+					case "403": //No Such Channel
+					case "404": //Can't send to channel
+					case "405": //Too many Channels
+					case "412": //No text to send
+					case "431": //No nickname given (/whois /whowas /nick)
+					case "442": //Not on Channel
+					case "441": //User not in chan
+					case "451": //Not registered
+					case "471": //Channel is full
+					case "473": //Invite only
+					case "474": //Banned from Channel
+					case "475": //Bad channel key
+					case "476": //Bac Channel Mask
+					case "482": //Not channel op
+					case "484": //Is Chan Service
+					case "489": //Secure only chan
 
                     default:
                         printText(line);
@@ -551,11 +532,29 @@ namespace ZIRC
             else
             {
 
-				if (text.StartsWith(A))
+				if ( text.StartsWith( A + "ACTION" ) )
 				{
-					this.printText("* " + nick + " " + text.Substring(7, text.Length - 8));
+					this.printText( "* " + nick + " " + text.Substring( 7, text.Length - 8 ) );
 				}
-                this.printText(nick + ": " + text);
+				else if ( text.StartsWith( A ) )
+				{
+					string[] textSplit = text.Split( ' ' );
+					this.printText("[" + nick + " " + textSplit[0].Remove( 0,1 ) + " Request]" + (textSplit.Length > 1 ? " " + text.Remove( 0, textSplit[0].Length + 1 ) : ""));
+					if ( text.StartsWith( A + "VERSION" ) )
+					{
+						parseInput( "/raw NOTICE " + nick + " :" + A + "VERSION ZIRC by Zorn_Taov (WIP)" + A, nick );
+					} 
+					else if ( text.StartsWith( A + "UPTIME" ) )
+					{
+
+					}
+					else if ( text.StartsWith( A + "TIME" ) )
+					{
+
+					}
+				}
+				else
+					this.printText(nick + ": " + text);
             }
         }
 
