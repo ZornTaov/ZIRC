@@ -173,22 +173,25 @@ namespace ZIRC
 
 		private void Menu_Copy(Object sender, EventArgs e)
 		{
+			if ( !( ( (ChatWindow)getSelectedNode().Tag ).ActiveControl is TextBoxBase ) ) return;
 			// Ensure that text is selected in the text box.    
-			if (((TextBox)((ChatWindow)getSelectedNode().Tag).ActiveControl).SelectionLength > 0)
+			if ( ( (TextBoxBase)( (ChatWindow)getSelectedNode().Tag ).ActiveControl ).SelectionLength > 0 )
 				// Copy the selected text to the Clipboard.
-				((TextBox)((ChatWindow)getSelectedNode().Tag).ActiveControl).Copy();
+				( (TextBoxBase)( (ChatWindow)getSelectedNode().Tag ).ActiveControl ).Copy();
 		}
 
 		private void Menu_Cut(Object sender, EventArgs e)
 		{
+			if ( !( ( (ChatWindow)getSelectedNode().Tag ).ActiveControl is TextBoxBase ) ) return;
 			// Ensure that text is currently selected in the text box.    
-			if (((TextBox)((ChatWindow)getSelectedNode().Tag).ActiveControl).SelectedText.Length > 0)
+			if ( ( (TextBoxBase)( (ChatWindow)getSelectedNode().Tag ).ActiveControl ).SelectedText.Length > 0 )
 				// Cut the selected text in the control and paste it into the Clipboard.
-				((TextBox)((ChatWindow)getSelectedNode().Tag).ActiveControl).Cut();
+				( (TextBoxBase)( (ChatWindow)getSelectedNode().Tag ).ActiveControl ).Cut();
 		}
 
 		private void Menu_Paste(Object sender, EventArgs e)
 		{
+			if ( !( ( (ChatWindow)getSelectedNode().Tag ).ActiveControl is TextBoxBase ) ) return;
 			// Determine if there is any text in the Clipboard to paste into the text box. 
 			if (Clipboard.GetDataObject().GetDataPresent(DataFormats.Text))
 			{
@@ -200,14 +203,22 @@ namespace ZIRC
 
 		private void Menu_Undo(Object sender, EventArgs e)
 		{
+			if ( !( ( (ChatWindow)getSelectedNode().Tag ).ActiveControl is TextBoxBase ) ) return;
 			// Determine if last operation can be undone in text box.    
-			if (((TextBox)((ChatWindow)getSelectedNode().Tag).ActiveControl).CanUndo == true)
+			if ( ( (TextBoxBase)( (ChatWindow)getSelectedNode().Tag ).ActiveControl ).CanUndo == true )
 			{
 				// Undo the last operation.
-				((TextBox)((ChatWindow)getSelectedNode().Tag).ActiveControl).Undo();
+				( (TextBoxBase)( (ChatWindow)getSelectedNode().Tag ).ActiveControl ).Undo();
 				// Clear the undo buffer to prevent last action from being redone.
 				//((TextBox)((ChatWindow)getSelectedNode().Tag).ActiveControl).ClearUndo();
 			}
+		}
+
+		private void Menu_SelectAll( object sender, EventArgs e )
+		{
+			if ( !( ( (ChatWindow)getSelectedNode().Tag ).ActiveControl is TextBoxBase ) ) return;
+			( (TextBoxBase)( (ChatWindow)getSelectedNode().Tag ).ActiveControl ).SelectionStart = 0;
+			( (TextBoxBase)( (ChatWindow)getSelectedNode().Tag ).ActiveControl ).SelectionLength = ( (TextBoxBase)( (ChatWindow)getSelectedNode().Tag ).ActiveControl ).Text.Length; 
 		}
 		private void exitToolStripMenuItem_Click(object sender, EventArgs e)
 		{
