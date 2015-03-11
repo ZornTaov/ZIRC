@@ -21,7 +21,7 @@ namespace ZIRC.Commands
 			{
 				return false;
 			}
-			window.SendRaw("PRIVMSG " + channel + " :" + window.A + "ACTION " + string.Join(" ", args) + window.A);
+			window.SendRaw("PRIVMSG " + channel + " :" + ChatWindow.A + "ACTION " + string.Join(" ", args) + ChatWindow.A);
 			window.getChannel(channel).printText("* " + window.nickName + " " + string.Join(" ", args));
 			return true;
 		}
