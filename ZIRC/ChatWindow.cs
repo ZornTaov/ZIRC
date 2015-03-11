@@ -38,7 +38,6 @@ namespace ZIRC
 			this.userList.ShowRootLines = false;
 			Undo = new Stack<string>();
 			Redo = new Stack<string>();
-			mainWindow.state.RegisterFunction("print", this, this.GetType().GetMethod("print"));
 		}
 
 		private void userList_SelectedIndexChanged(object sender, EventArgs e)
@@ -131,12 +130,12 @@ namespace ZIRC
 		public virtual void print(params object[] text)
 		{
 			if(text == null) text = new object[]{ "nil" };
-			string line = "[" + DateTime.Now.ToShortTimeString() + "] ";
+			string line = "";
 			foreach (object item in text)
 			{
 				line += (item == null ? "nil" : item.ToString()) + "\t";
 			}
-			chatBox.AppendText(line + Environment.NewLine);
+			printText( line );
 		}
 
 		public virtual void printText(string text)

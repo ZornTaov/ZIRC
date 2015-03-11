@@ -19,11 +19,19 @@ namespace ZIRC
 		public static SortedDictionary<string, CommandBase> commands = new SortedDictionary<string, CommandBase>();
         List<Form> windows = new List<Form>();
 		public Lua state = new Lua();
+		LuaWindow debug;
         public MainWindow()
         {
             InitializeComponent();
 			InitializeCommands();
+			InitializeLua();
         }
+
+		private void InitializeLua()
+		{
+			debug = new LuaWindow( this, "Debug" );
+			state.RegisterFunction( "print", debug, debug.GetType().GetMethod( "print" ) );
+		}
 
 		private void InitializeCommands()
 		{
@@ -81,7 +89,7 @@ namespace ZIRC
         private void makeDebugWindow()
         {
             TreeNode debugNode = new TreeNode("Debug");
-            debugNode.Tag = new LuaWindow(this, "Debug");
+			debugNode.Tag = debug;
             debugNode.Name = "Debug";
             ((ChatWindow)debugNode.Tag).MdiParent = this;
             ((ChatWindow)debugNode.Tag).WindowState = FormWindowState.Maximized;
