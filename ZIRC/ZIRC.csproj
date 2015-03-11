@@ -85,6 +85,7 @@
       <DependentUpon>ChatWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="Commands\CommandConnect.cs" />
+    <Compile Include="Commands\CommandCTCP.cs" />
     <Compile Include="Commands\CommandHelp.cs" />
     <Compile Include="Commands\CommandJoin.cs" />
     <Compile Include="Commands\CommandNick.cs" />

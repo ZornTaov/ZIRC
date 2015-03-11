@@ -27,16 +27,17 @@ namespace ZIRC
 
 		private void InitializeCommands()
 		{
-			commands.Add("help", new CommandHelp());
-			commands.Add("msg", new CommandMsg());
-			commands.Add("me", new CommandMe());
-			commands.Add("query", new CommandQuery());
-			commands.Add("raw", new CommandRaw());
-			commands.Add("quit", new CommandQuit());
-			commands.Add("connect", new CommandConnect());
-			commands.Add("nick", new CommandNick());
-			commands.Add("join", new CommandJoin());
-			commands.Add("part", new CommandPart());
+			commands.Add( "help", new CommandHelp() );
+			commands.Add( "msg", new CommandMsg() );
+			commands.Add( "me", new CommandMe() );
+			commands.Add( "query", new CommandQuery() );
+			commands.Add( "raw", new CommandRaw() );
+			commands.Add( "quit", new CommandQuit() );
+			commands.Add( "connect", new CommandConnect() );
+			commands.Add( "nick", new CommandNick() );
+			commands.Add( "join", new CommandJoin() );
+			commands.Add( "part", new CommandPart() );
+			commands.Add( "ctcp", new CommandCTCP() );
 		}
 
         private void locationTree_AfterSelect(object sender, TreeViewEventArgs e)

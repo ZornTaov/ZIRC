@@ -21,10 +21,10 @@ namespace ZIRC
 		private string prevLine = "";
 		public TreeNode node { get; protected set; }
 		/// Public string for control code characters
-		public string A = "\u0001"; // Action Events
-		public string B = "\u0002"; // Bold control
-		public string K = "\u0003"; // Color control
-		public string U = "\u0031"; // Underline control
+		public static string A = "\u0001"; // Action Events
+		public static string B = "\u0002"; // Bold control
+		public static string K = "\u0003"; // Color control
+		public static string U = "\u0031"; // Underline control
 		public ChatWindow(MainWindow mainWindow, string name, bool hasList = false)
 		{
 			InitializeComponent();
