@@ -65,7 +65,7 @@ namespace ZIRC
                 try
                 {
                     this.connection = new TcpClient(address, port);
-                    this.chatBox.AppendText("Connecting..." + Environment.NewLine);
+                    this.printText("Connecting...");
                     sockstream = connection.GetStream();
                     output = new StreamWriter(sockstream);// { NewLine = "\r\n", AutoFlush = true };
                     input = new StreamReader(sockstream);
@@ -78,7 +78,7 @@ namespace ZIRC
                 }
                 catch (Exception e)
                 {
-                    this.chatBox.AppendText("A " + e.ToString() + Environment.NewLine);
+					this.printText( "A " + e.ToString() );
                 }
             }
         }
@@ -105,9 +105,8 @@ namespace ZIRC
             base.OnClosed(e);
         }
 
-        public void closeServerConnection(string message = "goodbye")
+        public void closeServerConnection()
         {
-            SendRaw("QUIT :" + message + Environment.NewLine);
             timer1.Stop();
             //connection.Close();
             printText("Server Stopped");
@@ -132,7 +131,7 @@ namespace ZIRC
 				{
 					this.status = Status.Disconnecting;
 				}
-                if (log) this.chatBox.AppendText("<<< " + message + Environment.NewLine);
+				if ( log ) this.printText( "<<< " + message );
                 Console.WriteLine(message);
             }
         }
@@ -270,15 +269,22 @@ namespace ZIRC
         public void read() // DINO'S Turbo deluxe read from server loop. DO NOT MODIFY
         {
             while (sockstream.DataAvailable)
-            {
+			{
+				string line = "";
                 readPos += sockstream.Read(readBuffer, readPos, readBuffer.Length - readPos);
                 for (int i = 0; i < readPos; i++)
                 {
                     if (readBuffer[i] == 0xA || readBuffer[i] == 0xD)
                     {
                         if (i > 0)
-							parseLine(Encoding.UTF8.GetString(readBuffer, 0, i));
-
+						{
+							line = Encoding.UTF8.GetString( readBuffer, 0, i );
+							if ( line.Contains((char)0xfffd) )
+							{
+								line = Encoding.GetEncoding("iso-8859-1").GetString( readBuffer, 0, i );
+							}
+							parseLine(line);
+						}
                         // clear & continue
                         for (int j = 0; j < readPos - i - 1; j++)
                             readBuffer[j] = readBuffer[j + i + 1];
