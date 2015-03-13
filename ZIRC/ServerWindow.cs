@@ -398,6 +398,22 @@ namespace ZIRC
 
 						break;
 
+					case "mode":
+						if ( argSplit[0].Equals( nickName ) )
+						{
+							printText( argSplit[0] + " changed mode to " + text );
+						}
+						else
+						{
+							chan = getChannel( argSplit[0] );
+							if ( chan != null )
+							{
+								messageChannel( nick, argSplit[0], "Changed mode for " + argSplit[0] + " to " + string.Join( " ", args, 1, args.Length - 1 ) );
+								// apply mode changes to users
+							}
+						}
+						break;
+
 					case "join": // add nick to channel
 
 						messageChannel(nick, text, nick + " has joined the channel");
@@ -413,7 +429,7 @@ namespace ZIRC
 						break;
 
 					case "part": // remove nick from channel
-						messageChannel( nick, args, nick + " has left the channel" );
+						messageChannel( nick, args, "has left the channel" + (text.Equals("") ? "." : ": " + text ) );
 						chan = getChannel( args );
 						if ( chan != null )
 						{
@@ -421,12 +437,35 @@ namespace ZIRC
 						}
 						break;
 
+					case "kick":
+						messageChannel( nick, argSplit[0], argSplit[1] + " has been kicked from the channel" + ( text.Equals( "" ) ? "." : ": " + text ) );
+						chan = getChannel( argSplit[0] );
+						if ( chan != null )
+						{
+							chan.RemoveFromUserList( argSplit[1] );
+						}
+						break;
 					case "nick": // change nicks in all channels
-
+						foreach ( TreeNode node in this.node.Nodes )
+						{
+							if ( ( (ChannelWindow)node.Tag ).userList.Nodes.ContainsKey( nick ) )
+							{
+								( (ChannelWindow)node.Tag ).UpdateNick( nick, text, hostmask );
+								messageChannel( nick, node.Name, nick + " has changed their nick to " + text );
+							}
+						}
 						break;
 
 					case "quit": // remove nick from all channels
-
+						foreach ( TreeNode node in this.node.Nodes )
+						{
+							if ( ( (ChannelWindow)node.Tag ).userList.Nodes.ContainsKey(nick) )
+							{
+								( (ChannelWindow)node.Tag ).RemoveFromUserList( nick );
+								messageChannel( nick, node.Name, nick + " has quit (" + text + ")" );
+								
+							}
+						}
 						break;
 
 					case "privmsg":
@@ -530,7 +569,7 @@ namespace ZIRC
 			{
 				if (text.StartsWith(A))
 				{
-					getChannel(chan).printText("* " + nick + " " + text.Substring(0, text.Length - 0));
+					getChannel( chan ).printText( "* " + nick + text.Substring( 7, text.Length - 8 ) );
 				}
 				else
 					getChannel(chan).printText(nick + ": " + text);
@@ -540,7 +579,7 @@ namespace ZIRC
 
 				if ( text.StartsWith( A + "ACTION" ) )
 				{
-					this.printText( "* " + nick + " " + text.Substring( 7, text.Length - 8 ) );
+					this.printText( "* " + nick + text.Substring( 7, text.Length - 8 ) );
 				}
 				else if ( text.StartsWith( A ) )
 				{
