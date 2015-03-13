@@ -74,7 +74,15 @@ namespace ZIRC
 				return;
 			}
             TreeNode user = new TreeNode(mode + name);
-			user.Tag = new User(name);
+			if(name.Contains('@'))
+			{
+				user.Tag = User.Parse( name );
+			}
+			else
+			{
+				user.Tag = new User( name );
+			}
+			
 			((User)user.Tag).mode = mode;
             user.Name = name;
             userList.Nodes.Add(user);
