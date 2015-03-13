@@ -47,11 +47,11 @@ namespace ZIRC
   */
         // Regular Expression Data Parsers
         public static Regex coreregx = new Regex(@"^(?::(?<hostmask>\S+)\s)?(?<command>\S+)(?:\s(?!:)(?<args>.+?))?(?:\s:(?<text>.+))?$");
-        public static Regex hostsplit = new Regex(@"(?<nick>[\w\`\|\[\]\{\}\\\-]+)!(?<ident>~?[\w\.]+)@(?<host>[\w\d\.\:\-]+)");
+		public static Regex hostsplit = new Regex(@"(?<nick>[\w\`\|\[\]\{\}\\\-]+)!(?<ident>~?[\w\.]+)@(?<host>[\w\d\.\:\-]+)");
         public static Regex serverflags = new Regex(@"\b(?:(?<name>\w+)(?:=(?<arg>\S+))?\s?)\b");
         public static Regex modeevent = new Regex(@"(?<chan>\S+)\s(?<text>.*)");
         public static Regex usermode = new Regex(@"(?<mode>[+%@&~]*)");
 		public static Regex command = new Regex(@"^(?:\/(?<command>[\S]+)\s?)(?:(?<args>.+))?$");
-		public static Regex color = new Regex((char)3 + @"(?:\d{1,2}(?:,\d{1,2})?)?");
+		public static Regex color = new Regex( @"((?:\x03)(?<fore>\d{1,2})(,(?<back>\d{1,2})?)?)" );
     }
 }

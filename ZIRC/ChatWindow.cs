@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Globalization;
 using System.Text.RegularExpressions;
+using ZIRCExtensions;
 
 namespace ZIRC
 {
@@ -140,7 +141,92 @@ namespace ZIRC
 
 		public virtual void printText(string text)
 		{
-			chatBox.AppendText("[" + DateTime.Now.ToShortTimeString() + "] " + text + Environment.NewLine);
+			Color oFore = chatBox.SelectionColor;// = Color.FromKnownColor( KnownColor.WindowText );
+			Color oBack = chatBox.SelectionBackColor;// = Color.FromKnownColor( KnownColor.Window );
+			Color fore = oFore;
+			Color back = oBack;
+			Font oFont = Properties.Settings.Default.mainFont;
+			chatBox.Suspend();
+
+			chatBox.Select( chatBox.Text.Length , 0 );
+			chatBox.SelectionFont = oFont ;
+			chatBox.AppendText("[" + DateTime.Now.ToShortTimeString() + "] ");
+
+			bool under = false, color = false, bold = false;
+			int i = 0; 
+			while ( i < text.Length )
+			{
+				
+				switch ( (char)text[i] )
+				{
+					case (char)ControlCode.Bold:
+						bold = !bold;
+						i++;
+						continue;
+					case (char)ControlCode.Underline:
+					case (char)ControlCode.Underline2:
+						under = !under;
+						i++;
+						continue;
+					case (char)ControlCode.Color:
+						// try to match the color regex
+						Match match = IRCRegex.color.Match( text, i );
+						if ( match.Success )
+						{
+							color = true;
+							fore = Color.FromName( ( (ColorCode)int.Parse( match.Groups["fore"].Value.ToString() ) ).ToString() );
+							if ( !match.Groups["back"].Value.Equals( "" ) )
+							{
+								back = Color.FromName( ( (ColorCode)int.Parse( match.Groups["back"].Value.ToString() ) ).ToString() );
+							}
+							i += match.Length;
+						}
+						else
+						{
+							back = oBack;
+							fore = oFore;
+							i++;
+							color = false;
+						}
+
+						continue;
+				}
+				if ( i < text.Length )
+				{
+					chatBox.AppendText( text[i].ToString() );	
+				}
+				
+				if ( bold || under || color )
+				{
+					//color here
+					if ( color )
+					{
+						chatBox.Select( chatBox.Text.Length - 1, 1 );
+						chatBox.SelectionColor = fore;
+						chatBox.Select( chatBox.Text.Length - 1, 1 );
+						chatBox.SelectionBackColor = back;
+					}
+					chatBox.Select( chatBox.Text.Length - 1, 1 );
+					chatBox.SelectionFont = new Font( oFont, setBold( bold ) | setUnderline( under ) );
+				}
+				chatBox.Select( chatBox.Text.Length, 0 );
+				chatBox.SelectionColor = oFore;
+				chatBox.SelectionBackColor = oBack;
+				chatBox.SelectionFont = oFont;
+				i++;
+			}
+			chatBox.Resume();
+			chatBox.AppendText(Environment.NewLine);
+		}
+
+		private FontStyle setBold( bool bold )
+		{
+			return bold ? FontStyle.Bold : FontStyle.Regular;
+		}
+
+		private FontStyle setUnderline( bool underline )
+		{
+			return underline ? FontStyle.Underline : FontStyle.Regular;
 		}
 
 		public void timer1_Tick(object sender, EventArgs e)
@@ -183,6 +269,11 @@ namespace ZIRC
 		{
 			chatBox.SelectionStart = chatBox.Text.Length;
 			chatBox.ScrollToCaret();
+		}
+
+		private void chaBox_LinkClicked( object sender, LinkClickedEventArgs e )
+		{
+			System.Diagnostics.Process.Start( e.LinkText );
 		}
 	}
 }

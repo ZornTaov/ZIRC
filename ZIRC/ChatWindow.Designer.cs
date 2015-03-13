@@ -148,6 +148,7 @@
 			this.chatBox.Size = new System.Drawing.Size(185, 242);
 			this.chatBox.TabIndex = 17;
 			this.chatBox.Text = "";
+			this.chatBox.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.chaBox_LinkClicked);
 			this.chatBox.TextChanged += new System.EventHandler(this.chatBox_TextChanged);
 			// 
 			// ChatWindow

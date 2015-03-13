@@ -104,6 +104,7 @@
       <DependentUpon>ConnectWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="IRCConfig.cs" />
+    <Compile Include="IRCEnums.cs" />
     <Compile Include="LuaWindow.cs">
       <SubType>Form</SubType>
     </Compile>
