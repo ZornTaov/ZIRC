@@ -448,7 +448,7 @@ namespace ZIRC
 					case "nick": // change nicks in all channels
 						foreach ( TreeNode node in this.node.Nodes )
 						{
-							if ( ( (ChannelWindow)node.Tag ).userList.Nodes.ContainsKey( nick ) )
+							if ( ( (ChannelWindow)node.Tag ).userList.Nodes.ContainsKey( nick ) || node.Text == nick )
 							{
 								( (ChannelWindow)node.Tag ).UpdateNick( nick, text, hostmask );
 								messageChannel( nick, node.Name, nick + " has changed their nick to " + text );
