@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace ZIRC.Commands
 {
 	public class CommandQuit : CommandBase
@@ -12,15 +7,15 @@ namespace ZIRC.Commands
 		{
 			return "quit";
 		}
-		public override bool Do(ServerWindow window, string channel, string[] args)
+		public override bool Do( ServerWindow window, string channel, string[] args )
 		{
-			if (!base.Do(window, channel, args))
+			if ( !base.Do( window, channel, args ) )
 			{
 				return false;
 			}
 
 			window.status = ServerWindow.Status.Disconnecting;
-			window.SendRaw("QUIT " + string.Join(" ", args));
+			window.SendRaw( "QUIT " + string.Join( " ", args ) );
 			return true;
 		}
 		public override string Syntax()

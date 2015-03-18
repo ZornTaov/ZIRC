@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace ZIRC.Commands
 {
 	class CommandPart : CommandBase
@@ -12,14 +7,14 @@ namespace ZIRC.Commands
 		{
 			return "part";
 		}
-		public override bool Do(ServerWindow window, string channel, string[] args)
+		public override bool Do( ServerWindow window, string channel, string[] args )
 		{
-			if (!base.Do(window, channel, args))
+			if ( !base.Do( window, channel, args ) )
 			{
 				return false;
 			}
 
-			window.PartChannel(args[0], string.Join(" ", args, 1, args.Length - 1));
+			window.PartChannel( args[0], string.Join( " ", args, 1, args.Length - 1 ) );
 			return true;
 		}
 		public override string Syntax()

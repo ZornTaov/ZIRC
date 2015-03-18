@@ -1,18 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace ZIRC.Commands
 {
 	public abstract class CommandBase
 	{
-		public virtual bool Do(ServerWindow window, string channel, string[] args)
+		public virtual bool Do( ServerWindow window, string channel, string[] args )
 		{
-			if (args.Length < this.MinLength() || args.Length > this.MaxLength())
+			if ( args.Length < this.MinLength() || args.Length > this.MaxLength() )
 			{
-				this.ErrorLength(window, channel, args.Length, args.Length < this.MinLength());
+				this.ErrorLength( window, channel, args.Length, args.Length < this.MinLength() );
 				return false;
 			}
 			return true;
@@ -28,9 +23,9 @@ namespace ZIRC.Commands
 		{
 			return int.MaxValue;
 		}
-		public virtual void ErrorLength(ServerWindow window, string channel, int length, bool small)
+		public virtual void ErrorLength( ServerWindow window, string channel, int length, bool small )
 		{
-			window.getChannel(channel).printText("Error: " + Name() + " Args: " + length + (small ? " Not Enough Arguments." : " Too Many Arguments" ) );
+			window.getChannel( channel ).printText( "Error: " + Name() + " Args: " + length + ( small ? " Not Enough Arguments." : " Too Many Arguments" ) );
 		}
 	}
 }

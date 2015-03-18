@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
+﻿
 namespace ZIRC.Commands
 {
 	public class CommandConnect : CommandBase
@@ -11,14 +7,14 @@ namespace ZIRC.Commands
 		{
 			return "connect";
 		}
-		public override bool Do(ServerWindow window, string channel, string[] args)
+		public override bool Do( ServerWindow window, string channel, string[] args )
 		{
-			if (!base.Do(window, channel, args))
+			if ( !base.Do( window, channel, args ) )
 			{
 				return false;
 			}
 
-			if (window.status == ServerWindow.Status.Disconnected)
+			if ( window.status == ServerWindow.Status.Disconnected )
 			{
 				window.connect();
 			}

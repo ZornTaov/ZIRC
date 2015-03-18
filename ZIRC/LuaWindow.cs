@@ -1,38 +1,34 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ZIRC
 {
 	class LuaWindow : ChatWindow
 	{
-		public LuaWindow(MainWindow mainWindow, string name, bool hasList = false)
-			: base(mainWindow, name, hasList)
+		public LuaWindow( MainWindow mainWindow, string name, bool hasList = false )
+			: base( mainWindow, name, hasList )
 		{
 
 		}
 
-		public override void parseInput(string text, string channel = "")
+		public override void parseInput( string text, string channel = "" )
 		{
-			printText("lua> " + text);
+			printText( "lua> " + text );
 			try
 			{
-				object[] result = mainWindow.state.DoString(text);
-				if (result != null)
+				object[] result = mainWindow.state.DoString( text );
+				if ( result != null )
 				{
 					string line = "[" + DateTime.Now.ToShortTimeString() + "] *** ";
-					foreach (object item in result)
+					foreach ( object item in result )
 					{
-						line += (item == null ? "nil" : item.ToString()) + "\t";
+						line += ( item == null ? "nil" : item.ToString() ) + "\t";
 					}
-					printText(line);
+					printText( line );
 				}
 			}
-			catch (Exception e)
+			catch ( Exception e )
 			{
-				printText(e.ToString());
+				printText( e.ToString() );
 			}
 		}
 	}

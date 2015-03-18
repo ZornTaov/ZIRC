@@ -18,7 +18,7 @@ namespace ZIRC.Commands
 			{
 				return false;
 			}
-			window.SendRaw( "PRIVMSG " + args[0] + " :" + ChatWindow.A + args[1] + (args.Length >2 ? " " + string.Join( " ", args, 2, args.Length - 2 ) :"")+ ChatWindow.A );
+			window.SendRaw( "PRIVMSG " + args[0] + " :" + ChatWindow.A + args[1] + ( args.Length > 2 ? " " + string.Join( " ", args, 2, args.Length - 2 ) : "" ) + ChatWindow.A );
 			return true;
 		}
 		public override string Syntax()

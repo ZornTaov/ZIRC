@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace ZIRC.Commands
 {
 	public class CommandMsg : CommandBase
@@ -12,20 +7,20 @@ namespace ZIRC.Commands
 		{
 			return "msg";
 		}
-		public override bool Do(ServerWindow window, string channel, string[] args)
+		public override bool Do( ServerWindow window, string channel, string[] args )
 		{
-			if (!base.Do(window, channel,args))
+			if ( !base.Do( window, channel, args ) )
 			{
 				return false;
 			}
-			window.SendRaw("PRIVMSG " + (string)args[0] + " :" + string.Join(" ", args, 1, args.Length - 1));
-			if (window.getChannel((string)args[0]) != null)
+			window.SendRaw( "PRIVMSG " + (string)args[0] + " :" + string.Join( " ", args, 1, args.Length - 1 ) );
+			if ( window.getChannel( (string)args[0] ) != null )
 			{
-				window.getChannel((string)args[0]).printText(window.nickName + ": " + string.Join(" ", args, 1, args.Length - 1));
+				window.getChannel( (string)args[0] ).printText( window.nickName + ": " + string.Join( " ", args, 1, args.Length - 1 ) );
 			}
 			else
 			{
-				window.printText("-> *" + (string)args[0] + "* " + string.Join(" ", args, 1, args.Length - 1));
+				window.printText( "-> *" + (string)args[0] + "* " + string.Join( " ", args, 1, args.Length - 1 ) );
 			}
 			return true;
 		}

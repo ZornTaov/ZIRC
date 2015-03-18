@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace ZIRC.Commands
 {
 	class CommandMe : CommandBase
@@ -15,14 +10,14 @@ namespace ZIRC.Commands
 		/**
 		 *	args = 0:channel, 1: 
 		 */
-		public override bool Do(ServerWindow window, string channel, string[] args)
+		public override bool Do( ServerWindow window, string channel, string[] args )
 		{
-			if (!base.Do(window, channel, args))
+			if ( !base.Do( window, channel, args ) )
 			{
 				return false;
 			}
-			window.SendRaw("PRIVMSG " + channel + " :" + ChatWindow.A + "ACTION " + string.Join(" ", args) + ChatWindow.A);
-			window.getChannel(channel).printText("* " + window.nickName + " " + string.Join(" ", args));
+			window.SendRaw( "PRIVMSG " + channel + " :" + ChatWindow.A + "ACTION " + string.Join( " ", args ) + ChatWindow.A );
+			window.getChannel( channel ).printText( "* " + window.nickName + " " + string.Join( " ", args ) );
 			return true;
 		}
 		public override string Syntax()

@@ -7,13 +7,13 @@ namespace ZIRC.Commands
 		{
 			return "raw";
 		}
-		public override bool Do(ServerWindow window, string channel, string[] args)
+		public override bool Do( ServerWindow window, string channel, string[] args )
 		{
-			if (!base.Do(window, channel, args))
+			if ( !base.Do( window, channel, args ) )
 			{
 				return false;
 			}
-			window.SendRaw(string.Join(" ",args));
+			window.SendRaw( string.Join( " ", args ) );
 			return true;
 		}
 		public override string Syntax()

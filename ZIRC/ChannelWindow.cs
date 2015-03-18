@@ -1,81 +1,79 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using ZIRCExtensions;
 
 namespace ZIRC
 {
-    public class ChannelWindow : ChatWindow
-    {
-        public enum Type : byte
-        {
-            Channel,
-            Query
-        }
+	public class ChannelWindow : ChatWindow
+	{
+		public enum Type : byte
+		{
+			Channel,
+			Query
+		}
 
-        public List<string> userDict = new List<string>();
+		public List<string> userDict = new List<string>();
 		public string partReason = "";
-        public Type type;
+		public Type type;
 		//for tab completion
 		int count = 0;
 		int currentNameIndex = 0, firstNameIndex = 0;
 		bool tabStarted = false;
-		string keyword = ""; 
+		string keyword = "";
 		int lastspacepos = 0;
-        public ChannelWindow(MainWindow mainWindow, string name, Type type)
-            : base(mainWindow, name, (type == Type.Channel))
-        {
-			
-            this.name = name;
-            this.type = type;
-        }
-		private void updateAutoComplete(string name)
+		public ChannelWindow( MainWindow mainWindow, string name, Type type )
+			: base( mainWindow, name, ( type == Type.Channel ) )
+		{
+
+			this.name = name;
+			this.type = type;
+		}
+		private void updateAutoComplete( string name )
 		{
 			var acsc = new AutoCompleteStringCollection();
-			foreach (string item in userDict.ToArray())
+			foreach ( string item in userDict.ToArray() )
 			{
-				Console.WriteLine(item);
+				Console.WriteLine( item );
 			}
-			acsc.AddRange((string[])userDict.ToArray());
+			acsc.AddRange( (string[])userDict.ToArray() );
 		}
-		public override void parseInput(string text, string channel = "")
+		public override void parseInput( string text, string channel = "" )
 		{
 			//this.printText(((ServerWindow)this.node.Parent.Tag).nickName + ": " +text);
-			((ServerWindow)this.node.Parent.Tag).parseInput(text, channel);
+			( (ServerWindow)this.node.Parent.Tag ).parseInput( text, channel );
 		}
 
-        public void AddAllToUserList(string names)
-        {
-            string[] namesSplit = names.Split(' ');
-            foreach (string name in namesSplit)
-            {
-                AddToUserList(name);
-            }
-        }
+		public void AddAllToUserList( string names )
+		{
+			string[] namesSplit = names.Split( ' ' );
+			foreach ( string name in namesSplit )
+			{
+				AddToUserList( name );
+			}
+		}
 
-        public void AddToUserList(string name)
-        {
-			if (name.Equals(""))
+		public void AddToUserList( string name )
+		{
+			if ( name.Equals( "" ) )
 			{
 				return;
 			}
-			Match matchMode = IRCRegex.usermode.Match(name);
+			Match matchMode = IRCRegex.usermode.Match( name );
 			string mode = "";
-			if (matchMode.Success)
+			if ( matchMode.Success )
 			{
 				mode = matchMode.Value;
-				name = name.Substring(matchMode.Value.Length);
+				name = name.Substring( matchMode.Value.Length );
 			}
-			if (this.userList.Nodes.ContainsKey(name))
+			if ( this.userList.Nodes.ContainsKey( name ) )
 			{
 				return;
 			}
-            TreeNode user = new TreeNode(mode + name);
-			if(name.Contains('@'))
+			TreeNode user = new TreeNode( mode + name );
+			if ( name.Contains( '@' ) )
 			{
 				user.Tag = User.Parse( name );
 			}
@@ -83,13 +81,13 @@ namespace ZIRC
 			{
 				user.Tag = new User( name );
 			}
-			
-			((User)user.Tag).mode = mode;
-            user.Name = name;
-            userList.Nodes.Add(user);
-            userList.SelectedNode = user;
+
+			( (User)user.Tag ).mode = mode;
+			user.Name = name;
+			userList.Nodes.Add( user );
+			userList.SelectedNode = user;
 			userList.Sort();
-			userDict.Add(name);
+			userDict.Add( name );
 
 			tabStarted = false;
 			count = 0;
@@ -97,9 +95,9 @@ namespace ZIRC
 			currentNameIndex = 0;
 			lastspacepos = 0;
 			//updateAutoComplete();
-        }
+		}
 
-		public void	UpdateNick(string nick, string new_nick, string new_host)
+		public void UpdateNick( string nick, string new_nick, string new_host )
 		{
 			if ( nick.Equals( "" ) )
 			{
@@ -134,26 +132,26 @@ namespace ZIRC
 				{
 					this.name = this.Name = this.Text = new_nick;
 				}
-				
+
 			}
 			return;
 		}
 
-        protected override void OnClosed(EventArgs e)
-        {
-			if (this.type == Type.Channel)
-			{
-				((ServerWindow)this.node.Parent.Tag).SendRaw("PART " + name + " " + partReason);
-			} 
-            base.OnClosed(e);
-        }
-
-        internal void RemoveFromUserList(string nick)
+		protected override void OnClosed( EventArgs e )
 		{
-            if (this.userList.Nodes.ContainsKey(nick))
-            {
-				this.userList.Nodes.Remove(this.userList.Nodes[nick]);
-				this.userDict.Remove(nick);
+			if ( this.type == Type.Channel )
+			{
+				( (ServerWindow)this.node.Parent.Tag ).SendRaw( "PART " + name + " " + partReason );
+			}
+			base.OnClosed( e );
+		}
+
+		internal void RemoveFromUserList( string nick )
+		{
+			if ( this.userList.Nodes.ContainsKey( nick ) )
+			{
+				this.userList.Nodes.Remove( this.userList.Nodes[nick] );
+				this.userDict.Remove( nick );
 
 				tabStarted = false;
 				count = 0;
@@ -161,10 +159,10 @@ namespace ZIRC
 				currentNameIndex = 0;
 				lastspacepos = 0;
 				//updateAutoComplete();
-            }
-        }
+			}
+		}
 
-		public override void inputText_MouseDown(object sender, MouseEventArgs e)
+		public override void inputText_MouseDown( object sender, MouseEventArgs e )
 		{
 			tabStarted = false;
 			count = 0;
@@ -172,11 +170,11 @@ namespace ZIRC
 			currentNameIndex = 0;
 			lastspacepos = 0;
 		}
-		public override void main_KeyDown(object sender, KeyEventArgs e)
+		public override void main_KeyDown( object sender, KeyEventArgs e )
 		{
-			if (mainWindow.alt_KeyDown(sender, e)) return;
+			if ( mainWindow.alt_KeyDown( sender, e ) ) return;
 
-			if (!userList.Visible)
+			if ( !userList.Visible )
 			{
 				if ( sender is TextBox && ( (TextBox)sender ).Name.Equals( "inputText" ) && e.KeyCode == Keys.Tab )
 				{
@@ -205,30 +203,30 @@ namespace ZIRC
 			}
 			else
 			{
-				if (sender is TextBox && ((TextBox)sender).Name.Equals("inputText") && e.KeyCode == Keys.Tab)
+				if ( sender is TextBox && ( (TextBox)sender ).Name.Equals( "inputText" ) && e.KeyCode == Keys.Tab )
 				{
 					e.SuppressKeyPress = true;
 					e.Handled = true;
-					if (!tabStarted)
+					if ( !tabStarted )
 					{
-						if (inputText.SelectionStart == 0)
-						{
-							lastspacepos = 0;	
-						}
-						else
-						{
-							lastspacepos = inputText.Text.LastIndexOf(" ", inputText.SelectionStart - 1) + 1;
-						}
-						if (lastspacepos == -1 || lastspacepos == 1)
+						if ( inputText.SelectionStart == 0 )
 						{
 							lastspacepos = 0;
 						}
-						keyword = inputText.Text.Substring(Math.Min(lastspacepos, inputText.Text.Length), Math.Min(Math.Max(inputText.SelectionStart - (lastspacepos), 0), inputText.Text.Length)).Trim();
-						
-						currentNameIndex = firstNameIndex = userDict.FindIndex(FindName);
-						if (currentNameIndex == -1) return;
+						else
+						{
+							lastspacepos = inputText.Text.LastIndexOf( " ", inputText.SelectionStart - 1 ) + 1;
+						}
+						if ( lastspacepos == -1 || lastspacepos == 1 )
+						{
+							lastspacepos = 0;
+						}
+						keyword = inputText.Text.Substring( Math.Min( lastspacepos, inputText.Text.Length ), Math.Min( Math.Max( inputText.SelectionStart - ( lastspacepos ), 0 ), inputText.Text.Length ) ).Trim();
+
+						currentNameIndex = firstNameIndex = userDict.FindIndex( FindName );
+						if ( currentNameIndex == -1 ) return;
 						string name = userDict[currentNameIndex];
-						inputText.Text = inputText.Text.ReplaceAt(name, Math.Min(lastspacepos, inputText.Text.Length), inputText.SelectionStart - (lastspacepos));
+						inputText.Text = inputText.Text.ReplaceAt( name, Math.Min( lastspacepos, inputText.Text.Length ), inputText.SelectionStart - ( lastspacepos ) );
 						//inputText.SelectionStart = lastspacepos;
 						//inputText.SelectionLength = name.Length;
 						inputText.SelectionStart = name.Length + lastspacepos;
@@ -236,17 +234,17 @@ namespace ZIRC
 					}
 					else
 					{
-						if (inputText.SelectionLength == 0)
+						if ( inputText.SelectionLength == 0 )
 						{
 							inputText.SelectionStart = lastspacepos;
 							inputText.SelectionLength = userDict[currentNameIndex].Length;
 						}
-						if (currentNameIndex + 1 > userDict.Count)
+						if ( currentNameIndex + 1 > userDict.Count )
 						{
 							currentNameIndex = firstNameIndex;
 						}
-						currentNameIndex = userDict.FindIndex(currentNameIndex+1, FindName);
-						if (currentNameIndex == -1) currentNameIndex = firstNameIndex;
+						currentNameIndex = userDict.FindIndex( currentNameIndex + 1, FindName );
+						if ( currentNameIndex == -1 ) currentNameIndex = firstNameIndex;
 						string name = userDict[currentNameIndex];
 						inputText.Text = inputText.Text.ReplaceAt( name, inputText.SelectionStart, inputText.SelectionLength );
 						inputText.SelectionStart = name.Length + lastspacepos;
@@ -261,11 +259,11 @@ namespace ZIRC
 				currentNameIndex = 0;
 				lastspacepos = 0;
 			}
-			base.main_KeyDown(sender, e);
+			base.main_KeyDown( sender, e );
 		}
-		private bool FindName(string name)
+		private bool FindName( string name )
 		{
-			return name.ToLower().StartsWith(this.keyword.ToLower()) || keyword.Equals("");
+			return name.ToLower().StartsWith( this.keyword.ToLower() ) || keyword.Equals( "" );
 		}
-    }
+	}
 }

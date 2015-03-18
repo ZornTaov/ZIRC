@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace ZIRC.Commands
 {
 	public class CommandExample : CommandBase
@@ -12,14 +7,14 @@ namespace ZIRC.Commands
 		{
 			return "example";
 		}
-		public override bool Do(ServerWindow window, string channel, string[] args)
+		public override bool Do( ServerWindow window, string channel, string[] args )
 		{
-			if (!base.Do(window, channel, args))
+			if ( !base.Do( window, channel, args ) )
 			{
 				return false;
 			}
 
-			window.getChannel(channel).printText("This is an example command that prints to the channel you're on!");
+			window.getChannel( channel ).printText( "This is an example command that prints to the channel you're on!" );
 			return true;
 		}
 		public override string Syntax()
