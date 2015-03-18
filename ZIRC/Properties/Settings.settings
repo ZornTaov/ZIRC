@@ -5,5 +5,8 @@
     <Setting Name="mainFont" Type="System.Drawing.Font" Scope="User">
       <Value Profile="(Default)">Courier New, 9pt</Value>
     </Setting>
+    <Setting Name="TTSEnabled" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

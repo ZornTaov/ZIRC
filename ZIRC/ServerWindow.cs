@@ -9,6 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using ZIRC.Commands;
+using System.Speech.Synthesis;
 
 namespace ZIRC
 {
@@ -38,10 +39,13 @@ namespace ZIRC
 		private string altNick2;
 		private byte nickAttempts = 0;
 
+		private static SpeechSynthesizer synth = new SpeechSynthesizer();
+
 		public ServerWindow(MainWindow mainWindow, string name, bool hasList = false)
 			: base(mainWindow, name, hasList)
 		{
 			status = Status.Disconnected;
+			synth.SetOutputToDefaultAudioDevice();
 		}
 		public void startServer(string address, int port, string password, string nickName, string userName, string realName, string altNick1, string altNick2)
 		{
@@ -186,7 +190,7 @@ namespace ZIRC
 				if (!channel.Equals(""))
 				{
 					SendRaw("PRIVMSG " + channel + " :" + text, false);
-					messageChannel(this.nickName, channel, text);
+					messageChannel(this.nickName, channel, text, false);
 				}
 				else
 				{
@@ -416,7 +420,7 @@ namespace ZIRC
 
 					case "join": // add nick to channel
 
-						messageChannel(nick, text, nick + " has joined the channel");
+						messageChannel(nick, text, "has joined the channel");
 						chan = getChannel(text);
 						if (nick.Equals(nickName))
 						{
@@ -563,16 +567,21 @@ namespace ZIRC
 			}
 		}
 
-		private void messageChannel(string nick, string chan, string text)
+		private void messageChannel(string nick, string chan, string text, bool speak = true)
 		{
+			speak &= Properties.Settings.Default.TTSEnabled;
 			if (getChannel(chan) != null)
 			{
-				if (text.StartsWith(A))
+				if ( text.StartsWith( A ) )
 				{
 					getChannel( chan ).printText( "* " + nick + text.Substring( 7, text.Length - 8 ) );
+					if ( speak ) synth.SpeakAsync( nick + text.Substring( 7, text.Length - 8 ) );
 				}
 				else
-					getChannel(chan).printText(nick + ": " + text);
+				{
+					getChannel( chan ).printText( nick + ": " + text );
+					if ( speak ) synth.SpeakAsync( nick + " says: " + text );
+				}
 			}
 			else
 			{
@@ -580,11 +589,14 @@ namespace ZIRC
 				if ( text.StartsWith( A + "ACTION" ) )
 				{
 					this.printText( "* " + nick + text.Substring( 7, text.Length - 8 ) );
+					if ( speak ) synth.SpeakAsync( nick + text.Substring( 7, text.Length - 8 ) );
 				}
 				else if ( text.StartsWith( A ) )
 				{
 					string[] textSplit = text.Split( ' ' );
 					this.printText("[" + nick + " " + textSplit[0].Remove( 0,1 ) + " Request]" + (textSplit.Length > 1 ? " " + text.Remove( 0, textSplit[0].Length + 1 ) : ""));
+
+					if ( speak ) synth.SpeakAsync( nick + " sent a " + textSplit[0].Remove( 0,1 ) + " request " );
 					if ( text.StartsWith( A + "VERSION" ) )
 					{
 						parseInput( "/raw NOTICE " + nick + " :" + A + "VERSION ZIRC by Zorn_Taov (WIP)" + A, nick );
@@ -599,7 +611,10 @@ namespace ZIRC
 					}
 				}
 				else
+				{
 					this.printText(nick + ": " + text);
+					if ( speak ) synth.SpeakAsync( nick + " says: " + text );
+				}
 			}
 		}
 
