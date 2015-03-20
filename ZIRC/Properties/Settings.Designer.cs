@@ -46,5 +46,17 @@ namespace ZIRC.Properties {
                 this["TTSEnabled"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Microsoft Anna")]
+        public string TTSVoice {
+            get {
+                return ((string)(this["TTSVoice"]));
+            }
+            set {
+                this["TTSVoice"] = value;
+            }
+        }
     }
 }

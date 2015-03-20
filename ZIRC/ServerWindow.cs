@@ -35,12 +35,13 @@ namespace ZIRC
 		private string altNick2;
 		private byte nickAttempts = 0;
 
-		private static SpeechSynthesizer synth = new SpeechSynthesizer();
+		public static SpeechSynthesizer synth = new SpeechSynthesizer();
 
 		public ServerWindow( MainWindow mainWindow, string name, bool hasList = false )
 			: base( mainWindow, name, hasList )
 		{
 			status = Status.Disconnected;
+			synth.SelectVoice( Properties.Settings.Default.TTSVoice );
 			synth.SetOutputToDefaultAudioDevice();
 		}
 		public void startServer( string address, int port, string password, string nickName, string userName, string realName, string altNick1, string altNick2 )

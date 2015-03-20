@@ -11,19 +11,6 @@ namespace ZIRCExtensions
 			if ( length < 0 ) { length = 0; }
 			return str.Remove( index, Math.Min( length, str.Length - index ) ).Insert( index, replace );
 		}
-		[System.Runtime.InteropServices.DllImport( "user32.dll" )]
-		public static extern bool LockWindowUpdate( IntPtr hWndLock );
-
-		public static void Suspend1( this Control control )
-		{
-			LockWindowUpdate( control.Handle );
-		}
-
-		public static void Resume1( this Control control )
-		{
-			LockWindowUpdate( IntPtr.Zero );
-		}
-
 
 		[System.Runtime.InteropServices.DllImport( "user32.dll" )]
 		private static extern IntPtr SendMessage( IntPtr hWnd, int msg, IntPtr wp, IntPtr lp );

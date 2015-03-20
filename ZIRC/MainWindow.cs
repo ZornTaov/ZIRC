@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using ZIRC.Commands;
+using ZIRC.Options;
 
 namespace ZIRC
 {
@@ -247,6 +248,12 @@ namespace ZIRC
 				Properties.Settings.Default.mainFont = font;
 				Properties.Settings.Default.Save();
 			}
+		}
+
+		private void optionsToolStripMenuItem_Click( object sender, EventArgs e )
+		{
+			OptionsWindow options = new OptionsWindow( this );
+			options.Show();
 		}
 	}
 }
