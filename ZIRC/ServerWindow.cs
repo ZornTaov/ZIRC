@@ -41,7 +41,7 @@ namespace ZIRC
 			: base( mainWindow, name, hasList )
 		{
 			status = Status.Disconnected;
-			synth.SelectVoice( Properties.Settings.Default.TTSVoice );
+			if ( Properties.Settings.Default.TTSVoice != "" ) synth.SelectVoice( Properties.Settings.Default.TTSVoice );
 			synth.SetOutputToDefaultAudioDevice();
 		}
 		public void startServer( string address, int port, string password, string nickName, string userName, string realName, string altNick1, string altNick2 )

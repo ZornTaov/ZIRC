@@ -20,7 +20,7 @@ namespace ZIRC.Options
 			{
 				VoiceInfo info = voice.VoiceInfo;
 				voiceBox.Items.Add( info.Name );
-				OutputVoiceInfo( info );
+				//OutputVoiceInfo( info );
 			}
 			voiceBox.SelectedItem = Properties.Settings.Default.TTSVoice;
 		}

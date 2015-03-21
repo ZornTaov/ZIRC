@@ -6,10 +6,10 @@
       <Value Profile="(Default)">Courier New, 9pt</Value>
     </Setting>
     <Setting Name="TTSEnabled" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
+      <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="TTSVoice" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Microsoft Anna</Value>
+      <Value Profile="(Default)" />
     </Setting>
   </Settings>
 </SettingsFile>
