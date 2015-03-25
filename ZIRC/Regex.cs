@@ -42,7 +42,7 @@ namespace ZIRC
   */
 		// Regular Expression Data Parsers
 		public static Regex coreregx = new Regex( @"^(?::(?<hostmask>\S+)\s)?(?<command>\S+)(?:\s(?!:)(?<args>.+?))?(?:\s:(?<text>.+))?$" );
-		public static Regex hostsplit = new Regex( @"(?<nick>[\w\`\|\[\]\{\}\\\-]+)!(?<ident>~?[\w\.]+)@(?<host>[\w\d\.\:\-]+)" );
+		public static Regex hostsplit = new Regex( @"(?<nick>[^\!]+)!(?<ident>~?[^@]+)@(?<host>[\S]+)" );
 		public static Regex serverflags = new Regex( @"\b(?:(?<name>\w+)(?:=(?<arg>\S+))?\s?)\b" );
 		public static Regex modeevent = new Regex( @"(?<chan>\S+)\s(?<text>.*)" );
 		public static Regex usermode = new Regex( @"(?<mode>[+%@&~]*)" );
