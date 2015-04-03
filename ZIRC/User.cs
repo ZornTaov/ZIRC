@@ -11,13 +11,8 @@ namespace ZIRC
 		public String host { get; protected set; }
 		public String hostmask { get; protected set; }
 		public string mode { get; set; }
-		public User()
-			: this( "", "unknown", "Unknown" ) { }
-		public User( String nick )
-			: this( "", "unknown", nick ) { }
-		public User( String user, String nick )
-			: this( "", user, nick ) { }
-		public User( String host, String user, String nick )
+
+		public User( String nick = "Unknown", String host = "Unknown", String user = "Unknown" )
 		{
 			this.hostmask = nick + "!" + user + "@" + host;
 			this.host = host;
@@ -38,6 +33,7 @@ namespace ZIRC
 			{
 				User user = new User();
 
+				user.hostmask = hostmask;
 				user.nick = userMatch.Groups["nick"].Value;
 				user.user = userMatch.Groups["ident"].Value;
 				user.host = userMatch.Groups["host"].Value;

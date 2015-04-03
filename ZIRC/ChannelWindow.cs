@@ -19,15 +19,14 @@ namespace ZIRC
 		public string partReason = "";
 		public Type type;
 		//for tab completion
-		int count = 0;
 		int currentNameIndex = 0, firstNameIndex = 0;
 		bool tabStarted = false;
 		string keyword = "";
 		int lastspacepos = 0;
+
 		public ChannelWindow( MainWindow mainWindow, string name, Type type )
 			: base( mainWindow, name, ( type == Type.Channel ) )
 		{
-
 			this.name = name;
 			this.type = type;
 		}
@@ -90,7 +89,6 @@ namespace ZIRC
 			userDict.Add( name );
 
 			tabStarted = false;
-			count = 0;
 			keyword = "";
 			currentNameIndex = 0;
 			lastspacepos = 0;
@@ -119,7 +117,6 @@ namespace ZIRC
 					userDict.Add( new_nick );
 
 					tabStarted = false;
-					count = 0;
 					keyword = "";
 					currentNameIndex = 0;
 					lastspacepos = 0;
@@ -154,7 +151,6 @@ namespace ZIRC
 				this.userDict.Remove( nick );
 
 				tabStarted = false;
-				count = 0;
 				keyword = "";
 				currentNameIndex = 0;
 				lastspacepos = 0;
@@ -165,7 +161,6 @@ namespace ZIRC
 		public override void inputText_MouseDown( object sender, MouseEventArgs e )
 		{
 			tabStarted = false;
-			count = 0;
 			keyword = "";
 			currentNameIndex = 0;
 			lastspacepos = 0;
@@ -254,7 +249,6 @@ namespace ZIRC
 			if ( sender is TextBox && ( (TextBox)sender ).Name.Equals( "inputText" ) && e.KeyCode != Keys.Tab )
 			{
 				tabStarted = false;
-				count = 0;
 				keyword = "";
 				currentNameIndex = 0;
 				lastspacepos = 0;
