@@ -26,6 +26,9 @@ namespace ZIRC
 		public static string B = "\u0002"; // Bold control
 		public static string K = "\u0003"; // Color control
 		public static string U = "\u0031"; // Underline control
+
+		//TTS enablers
+		public bool TTSEnable, TTSSay, TTSAct, TTSJoin;
 		public ChatWindow( MainWindow mainWindow, string name, bool hasList = false )
 		{
 			InitializeComponent();
@@ -39,6 +42,15 @@ namespace ZIRC
 			this.userList.ShowRootLines = false;
 			Undo = new Stack<string>();
 			Redo = new Stack<string>();
+			setTTSDefaults();
+		}
+
+		public void setTTSDefaults()
+		{
+			this.TTSEnable = Properties.Settings.Default.TTSEnabled;
+			this.TTSSay = Properties.Settings.Default.TTSSay;
+			this.TTSAct = Properties.Settings.Default.TTSAct;
+			this.TTSJoin = Properties.Settings.Default.TTSJoin;
 		}
 
 		private void userList_SelectedIndexChanged( object sender, EventArgs e )

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 using ZIRC.Commands;
 using ZIRC.Options;
@@ -20,6 +21,8 @@ namespace ZIRC
 			InitializeComponent();
 			InitializeCommands();
 			InitializeLua();
+			Synth.init();
+			this.locationTTSEnable.Enabled = true;
 		}
 
 		private void InitializeLua()
@@ -30,17 +33,7 @@ namespace ZIRC
 
 		private void InitializeCommands()
 		{
-			commands.Add( "help", new CommandHelp() );
-			commands.Add( "msg", new CommandMsg() );
-			commands.Add( "me", new CommandMe() );
-			commands.Add( "query", new CommandQuery() );
-			commands.Add( "raw", new CommandRaw() );
-			commands.Add( "quit", new CommandQuit() );
-			commands.Add( "connect", new CommandConnect() );
-			commands.Add( "nick", new CommandNick() );
-			commands.Add( "join", new CommandJoin() );
-			commands.Add( "part", new CommandPart() );
-			commands.Add( "ctcp", new CommandCTCP() );
+			commands = ZIRCExtensions.ReflectiveEnumerator.GetEnumerableOfType<CommandBase>();
 		}
 
 		private void locationTree_AfterSelect( object sender, TreeViewEventArgs e )
@@ -254,6 +247,22 @@ namespace ZIRC
 		{
 			OptionsWindow options = new OptionsWindow( this );
 			options.Show();
+		}
+
+		private void locationTTSEnabled_CheckedChanged( object sender, EventArgs e )
+		{
+			( (ChatWindow)locationTree.SelectedNode.Tag ).TTSEnable = !this.locationTTSEnable.Enabled;
+		}
+
+		private void locationContextMenu_Opening( object sender, System.ComponentModel.CancelEventArgs e )
+		{
+			if ( !( ( (TreeView)( (ContextMenuStrip)sender ).SourceControl ).SelectedNode.Tag is ChatWindow ) )
+			{
+				e.Cancel = true;
+			}
+
+			this.locationTTSEnable.Checked = Properties.Settings.Default.TTSEnabled & ( (ChatWindow)locationTree.SelectedNode.Tag ).TTSEnable;
+
 		}
 	}
 }

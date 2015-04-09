@@ -58,5 +58,101 @@ namespace ZIRC.Properties {
                 this["TTSVoice"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool TTSSay {
+            get {
+                return ((bool)(this["TTSSay"]));
+            }
+            set {
+                this["TTSSay"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool TTSAct {
+            get {
+                return ((bool)(this["TTSAct"]));
+            }
+            set {
+                this["TTSAct"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool TTSJoin {
+            get {
+                return ((bool)(this["TTSJoin"]));
+            }
+            set {
+                this["TTSJoin"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool TTSPart {
+            get {
+                return ((bool)(this["TTSPart"]));
+            }
+            set {
+                this["TTSPart"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool TTSKick {
+            get {
+                return ((bool)(this["TTSKick"]));
+            }
+            set {
+                this["TTSKick"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool TTSQuit {
+            get {
+                return ((bool)(this["TTSQuit"]));
+            }
+            set {
+                this["TTSQuit"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool TTSMode {
+            get {
+                return ((bool)(this["TTSMode"]));
+            }
+            set {
+                this["TTSMode"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool TTSNick {
+            get {
+                return ((bool)(this["TTSNick"]));
+            }
+            set {
+                this["TTSNick"] = value;
+            }
+        }
     }
 }

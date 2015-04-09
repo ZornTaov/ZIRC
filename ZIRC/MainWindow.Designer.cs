@@ -35,6 +35,11 @@
 			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
 			this.locationTree = new System.Windows.Forms.TreeView();
+			this.locationContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+			this.locationTTSEnable = new System.Windows.Forms.ToolStripMenuItem();
+			this.locationTTSSay = new System.Windows.Forms.ToolStripMenuItem();
+			this.locationTTSAct = new System.Windows.Forms.ToolStripMenuItem();
+			this.locationTTSJoin = new System.Windows.Forms.ToolStripMenuItem();
 			this.main = new System.Windows.Forms.Timer(this.components);
 			this.menuStrip1 = new System.Windows.Forms.MenuStrip();
 			this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -68,11 +73,12 @@
 			this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
 			this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-			this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
-			this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
-			this.toolStripStatusLabel3 = new System.Windows.Forms.ToolStripStatusLabel();
+			this.toolStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
+			this.actionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.sayToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.splitter1 = new System.Windows.Forms.Splitter();
 			this.fontDialog1 = new System.Windows.Forms.FontDialog();
+			this.locationContextMenu.SuspendLayout();
 			this.menuStrip1.SuspendLayout();
 			this.statusStrip1.SuspendLayout();
 			this.SuspendLayout();
@@ -88,6 +94,47 @@
 			this.locationTree.TabIndex = 3;
 			this.locationTree.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.locationTree_AfterSelect);
 			this.locationTree.KeyDown += new System.Windows.Forms.KeyEventHandler(this.main_KeyDown);
+			// 
+			// locationContextMenu
+			// 
+			this.locationContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.locationTTSEnable});
+			this.locationContextMenu.Name = "locationTTSContextMenu";
+			this.locationContextMenu.Size = new System.Drawing.Size(133, 26);
+			this.locationContextMenu.Opening += new System.ComponentModel.CancelEventHandler(this.locationContextMenu_Opening);
+			// 
+			// locationTTSEnable
+			// 
+			this.locationTTSEnable.CheckOnClick = true;
+			this.locationTTSEnable.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.locationTTSSay,
+            this.locationTTSAct,
+            this.locationTTSJoin});
+			this.locationTTSEnable.Name = "locationTTSEnable";
+			this.locationTTSEnable.Size = new System.Drawing.Size(132, 22);
+			this.locationTTSEnable.Text = "TTS Enable";
+			this.locationTTSEnable.CheckedChanged += new System.EventHandler(this.locationTTSEnabled_CheckedChanged);
+			// 
+			// locationTTSSay
+			// 
+			this.locationTTSSay.CheckOnClick = true;
+			this.locationTTSSay.Name = "locationTTSSay";
+			this.locationTTSSay.Size = new System.Drawing.Size(133, 22);
+			this.locationTTSSay.Text = "Enable Say";
+			// 
+			// locationTTSAct
+			// 
+			this.locationTTSAct.CheckOnClick = true;
+			this.locationTTSAct.Name = "locationTTSAct";
+			this.locationTTSAct.Size = new System.Drawing.Size(133, 22);
+			this.locationTTSAct.Text = "Enable Act";
+			// 
+			// locationTTSJoin
+			// 
+			this.locationTTSJoin.CheckOnClick = true;
+			this.locationTTSJoin.Name = "locationTTSJoin";
+			this.locationTTSJoin.Size = new System.Drawing.Size(133, 22);
+			this.locationTTSJoin.Text = "Enable Join";
 			// 
 			// main
 			// 
@@ -349,32 +396,37 @@
 			// statusStrip1
 			// 
 			this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripStatusLabel1,
-            this.toolStripStatusLabel2,
-            this.toolStripStatusLabel3});
+            this.toolStripDropDownButton1});
 			this.statusStrip1.Location = new System.Drawing.Point(0, 502);
 			this.statusStrip1.Name = "statusStrip1";
 			this.statusStrip1.Size = new System.Drawing.Size(833, 22);
 			this.statusStrip1.TabIndex = 8;
 			this.statusStrip1.Text = "statusStrip1";
 			// 
-			// toolStripStatusLabel1
+			// toolStripDropDownButton1
 			// 
-			this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-			this.toolStripStatusLabel1.Size = new System.Drawing.Size(118, 17);
-			this.toolStripStatusLabel1.Text = "toolStripStatusLabel1";
+			this.toolStripDropDownButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+			this.toolStripDropDownButton1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.actionToolStripMenuItem,
+            this.sayToolStripMenuItem});
+			this.toolStripDropDownButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.toolStripDropDownButton1.Name = "toolStripDropDownButton1";
+			this.toolStripDropDownButton1.Size = new System.Drawing.Size(85, 20);
+			this.toolStripDropDownButton1.Text = "TTS Options";
 			// 
-			// toolStripStatusLabel2
+			// actionToolStripMenuItem
 			// 
-			this.toolStripStatusLabel2.Name = "toolStripStatusLabel2";
-			this.toolStripStatusLabel2.Size = new System.Drawing.Size(118, 17);
-			this.toolStripStatusLabel2.Text = "toolStripStatusLabel2";
+			this.actionToolStripMenuItem.CheckOnClick = true;
+			this.actionToolStripMenuItem.Name = "actionToolStripMenuItem";
+			this.actionToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+			this.actionToolStripMenuItem.Text = "action";
 			// 
-			// toolStripStatusLabel3
+			// sayToolStripMenuItem
 			// 
-			this.toolStripStatusLabel3.Name = "toolStripStatusLabel3";
-			this.toolStripStatusLabel3.Size = new System.Drawing.Size(118, 17);
-			this.toolStripStatusLabel3.Text = "toolStripStatusLabel3";
+			this.sayToolStripMenuItem.CheckOnClick = true;
+			this.sayToolStripMenuItem.Name = "sayToolStripMenuItem";
+			this.sayToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+			this.sayToolStripMenuItem.Text = "Say";
 			// 
 			// splitter1
 			// 
@@ -399,6 +451,7 @@
 			this.Text = "ZIRC";
 			this.Load += new System.EventHandler(this.MainWindow_Load);
 			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.main_KeyDown);
+			this.locationContextMenu.ResumeLayout(false);
 			this.menuStrip1.ResumeLayout(false);
 			this.menuStrip1.PerformLayout();
 			this.statusStrip1.ResumeLayout(false);
@@ -440,15 +493,20 @@
         private System.Windows.Forms.ToolStripMenuItem searchToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
-        private System.Windows.Forms.StatusStrip statusStrip1;
-        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
-        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel2;
-		private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel3;
+		private System.Windows.Forms.StatusStrip statusStrip1;
         public System.Windows.Forms.TreeView locationTree;
         private System.Windows.Forms.Splitter splitter1;
         private System.Windows.Forms.ToolStripMenuItem debugWindowToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem fonttemporaryToolStripMenuItem;
 		private System.Windows.Forms.FontDialog fontDialog1;
+		private System.Windows.Forms.ToolStripDropDownButton toolStripDropDownButton1;
+		private System.Windows.Forms.ToolStripMenuItem actionToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem sayToolStripMenuItem;
+		private System.Windows.Forms.ContextMenuStrip locationContextMenu;
+		private System.Windows.Forms.ToolStripMenuItem locationTTSEnable;
+		private System.Windows.Forms.ToolStripMenuItem locationTTSSay;
+		private System.Windows.Forms.ToolStripMenuItem locationTTSAct;
+		private System.Windows.Forms.ToolStripMenuItem locationTTSJoin;
 
     }
 }

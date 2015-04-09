@@ -38,7 +38,11 @@ namespace ZIRC.Options
 			{
 				foreach ( TreeNode node in mainWindow.locationTree.Nodes )
 				{
-					( (ChatWindow)node.Tag ).chatBox.Font = ( (ChatWindow)node.Tag ).inputText.Font = Properties.Settings.Default.mainFont;
+					if ( node.Tag is ChatWindow )
+					{
+						( (ChatWindow)node.Tag ).setTTSDefaults(); // sets all windows to use new defaults, I'd rather do it like this so that everything gets updated than having th euser restart the program.
+					}
+
 				}
 			}
 			Properties.Settings.Default.Save();

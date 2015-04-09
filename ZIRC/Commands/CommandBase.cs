@@ -1,4 +1,5 @@
 ﻿
+using System;
 namespace ZIRC.Commands
 {
 	public abstract class CommandBase
@@ -11,6 +12,14 @@ namespace ZIRC.Commands
 				return false;
 			}
 			return true;
+		}
+		public CommandBase getCommand()
+		{
+			return this;
+		}
+		public override string ToString()
+		{
+			return Name();
 		}
 		public abstract string Name();
 		public abstract string Syntax();

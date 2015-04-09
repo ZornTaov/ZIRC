@@ -35,14 +35,10 @@ namespace ZIRC
 		private string altNick2;
 		private byte nickAttempts = 0;
 
-		public static SpeechSynthesizer synth = new SpeechSynthesizer();
-
 		public ServerWindow( MainWindow mainWindow, string name, bool hasList = false )
 			: base( mainWindow, name, hasList )
 		{
 			status = Status.Disconnected;
-			if ( Properties.Settings.Default.TTSVoice != "" ) synth.SelectVoice( Properties.Settings.Default.TTSVoice );
-			synth.SetOutputToDefaultAudioDevice();
 		}
 		public void startServer( string address, int port, string password, string nickName, string userName, string realName, string altNick1, string altNick2 )
 		{
@@ -346,10 +342,10 @@ namespace ZIRC
 			if ( match.Success )
 			{
 
-				string hostmask = match.Groups["hostmask"] != null ? match.Groups["hostmask"].Value : ""; //FULL HOSTMASK STRING ASSIGNMENT
-				string command = match.Groups["command"] != null ? match.Groups["command"].Value : ""; //IRC COMMAND
-				string args = match.Groups["args"] != null ? match.Groups["args"].Value : ""; //COMMAND ARGUMENTS #channel, Modes, etc.
-				string text = match.Groups["text"] != null ? match.Groups["text"].Value : ""; //VARIABLE TEXT TRAILING EVENT
+				string hostmask = match.Groups["hostmask"].Value ?? ""; //FULL HOSTMASK STRING ASSIGNMENT
+				string command = match.Groups["command"].Value ?? ""; //IRC COMMAND
+				string args = match.Groups["args"].Value ?? ""; //COMMAND ARGUMENTS #channel, Modes, etc.
+				string text = match.Groups["text"].Value ?? ""; //VARIABLE TEXT TRAILING EVENT
 				string nick = "", ident = "", host = "", address = "";
 				ChannelWindow chan;
 				string[] argSplit = args.Split( ' ' );
@@ -572,12 +568,12 @@ namespace ZIRC
 				if ( text.StartsWith( A ) )
 				{
 					getChannel( chan ).printText( "* " + nick + text.Substring( 7, text.Length - 8 ) );
-					if ( speak ) synth.SpeakAsync( nick + text.Substring( 7, text.Length - 8 ) );
+					if ( speak ) Synth.synth.SpeakAsync( nick + text.Substring( 7, text.Length - 8 ) );
 				}
 				else
 				{
 					getChannel( chan ).printText( nick + ": " + text );
-					if ( speak ) synth.SpeakAsync( nick + " says: " + text );
+					if ( speak ) Synth.synth.SpeakAsync( nick + " says: " + text );
 				}
 			}
 			else
@@ -586,14 +582,14 @@ namespace ZIRC
 				if ( text.StartsWith( A + "ACTION" ) )
 				{
 					this.printText( "* " + nick + text.Substring( 7, text.Length - 8 ) );
-					if ( speak ) synth.SpeakAsync( nick + text.Substring( 7, text.Length - 8 ) );
+					if ( speak ) Synth.synth.SpeakAsync( nick + text.Substring( 7, text.Length - 8 ) );
 				}
 				else if ( text.StartsWith( A ) )
 				{
 					string[] textSplit = text.Split( ' ' );
 					this.printText( "[" + nick + " " + textSplit[0].Remove( 0, 1 ) + " Request]" + ( textSplit.Length > 1 ? " " + text.Remove( 0, textSplit[0].Length + 1 ) : "" ) );
 
-					if ( speak ) synth.SpeakAsync( nick + " sent a " + textSplit[0].Remove( 0, 1 ) + " request " );
+					if ( speak ) Synth.synth.SpeakAsync( nick + " sent a " + textSplit[0].Remove( 0, 1 ) + " request " );
 					if ( text.StartsWith( A + "VERSION" ) )
 					{
 						parseInput( "/raw NOTICE " + nick + " :" + A + "VERSION ZIRC by Zorn_Taov (WIP)" + A, nick );
@@ -610,7 +606,7 @@ namespace ZIRC
 				else
 				{
 					this.printText( nick + ": " + text );
-					if ( speak ) synth.SpeakAsync( nick + " says: " + text );
+					if ( speak ) Synth.synth.SpeakAsync( nick + " says: " + text );
 				}
 			}
 		}
