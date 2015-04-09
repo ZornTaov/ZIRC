@@ -40,6 +40,7 @@ namespace ZIRC.Options
 				{
 					if ( node.Tag is ChatWindow )
 					{
+						( (ChatWindow)node.Tag ).chatBox.Font = ( (ChatWindow)node.Tag ).inputText.Font = Properties.Settings.Default.mainFont; // attempt to change font, removes previous bold/underline/colors from the text...
 						( (ChatWindow)node.Tag ).setTTSDefaults(); // sets all windows to use new defaults, I'd rather do it like this so that everything gets updated than having th euser restart the program.
 					}
 
