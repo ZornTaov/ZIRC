@@ -34,7 +34,15 @@ namespace ZIRC.Commands
 		}
 		public virtual void ErrorLength( ServerWindow window, string channel, int length, bool small )
 		{
-			window.getChannel( channel ).printText( "Error: " + Name() + " Args: " + length + ( small ? " Not Enough Arguments." : " Too Many Arguments" ) );
+			ChannelWindow chan = window.getChannel(channel);
+            if (chan != null)
+            {
+				chan.printText( "Error: " + Name() + " Args: " + length + ( small ? " Not Enough Arguments." : " Too Many Arguments" ) );
+            }
+			else
+            {
+				Console.WriteLine("Error: " + Name() + " Args: " + length + (small ? " Not Enough Arguments." : " Too Many Arguments"));
+			}
 		}
 	}
 }
