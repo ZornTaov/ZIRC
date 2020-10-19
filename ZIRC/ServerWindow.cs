@@ -40,6 +40,10 @@ namespace ZIRC
 		{
 			status = Status.Disconnected;
 		}
+        public ServerWindow()
+        {
+			status = Status.Disconnected;
+        }
 		public void startServer( string address, int port, string password, string nickName, string userName, string realName, string altNick1, string altNick2 )
 		{
 			this.address = address;

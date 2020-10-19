@@ -30,6 +30,12 @@ namespace ZIRC
 			this.name = name;
 			this.type = type;
 		}
+		public ChannelWindow(MainWindow mainWindow, string name, bool hasList = false)
+			: base(mainWindow, name, hasList)
+		{
+			this.name = name;
+			this.type = Type.Channel;
+		}
 		private void updateAutoComplete( string name )
 		{
 			var acsc = new AutoCompleteStringCollection();

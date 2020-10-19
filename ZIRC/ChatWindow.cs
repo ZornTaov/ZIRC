@@ -44,7 +44,10 @@ namespace ZIRC
 			Redo = new Stack<string>();
 			setTTSDefaults();
 		}
+		public ChatWindow()
+        {
 
+        }
 		public void setTTSDefaults()
 		{
 			this.TTSEnable = Properties.Settings.Default.TTSEnabled;
